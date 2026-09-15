@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sickle Cell &amp; Hemophilia — HCC3 Exam 2</title>
+<style>
+:root{
+  --ivory:#FDF6EF;
+  --ivory-deep:#F8ECDE;
+  --ink:#2B1620;
+  --ink-soft:#5A4048;
+  --ruby:#A81F3D;
+  --ruby-deep:#7C1530;
+  --ruby-pale:#FBE3E9;
+  --teal:#0E6E64;
+  --teal-deep:#0A4F48;
+  --teal-pale:#DFF2EE;
+  --gold:#C98A25;
+  --gold-pale:#FBEFD6;
+  --line:#E9D9C8;
+  --shadow: 0 10px 30px rgba(124,21,48,0.10);
+  --radius: 14px;
+  font-size: 16px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family: "Iowan Old Style","Palatino Linotype", Georgia, "Times New Roman", serif;
+  background: var(--ivory);
+  color: var(--ink);
+  min-height:100vh;
+}
+.ui{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+/* ---------- layout ---------- */
+.app{
+  display:flex;
+  min-height:100vh;
+}
+
+/* Sidebar */
+.sidebar{
+  width:270px;
+  flex-shrink:0;
+  background: linear-gradient(180deg,var(--ruby-deep), #4A0E22 85%);
+  color:#F6E3E9;
+  padding:22px 16px 24px;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+}
+.brand{
+  padding:4px 8px 18px;
+  border-bottom:1px solid rgba(255,255,255,0.14);
+  margin-bottom:14px;
+}
+.brand .kicker{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size:11px;
+  letter-spacing:0.04em;
+  color:#F0B9C6;
+  margin-bottom:4px;
+}
+.brand h1{
+  font-size:21px;
+  line-height:1.25;
+  margin:0;
+  font-weight:600;
+}
+.brand .sub{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size:12.5px;
+  color:#E3AEBB;
+  margin-top:6px;
+}
+
+.xp-box{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.14);
+  border-radius:12px;
+  padding:12px 14px;
+  margin-bottom:18px;
+}
+.xp-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-bottom:6px;
+}
+.xp-label{font-size:11.5px;color:#EFC3CD;letter-spacing:0.02em;}
+.xp-value{font-size:15px;font-weight:700;color:#FFF6E9;}
+.xp-bar-track{
+  height:7px;
+  border-radius:5px;
+  background:rgba(255,255,255,0.15);
+  overflow:hidden;
+}
+.xp-bar-fill{
+  height:100%;
+  background: linear-gradient(90deg,#F0B429,#F6D174);
+  width:0%;
+  transition:width .5s ease;
+}
+.xp-level{
+  font-size:11px;
+  color:#F0B9C6;
+  margin-top:6px;
+}
+
+nav.navlist{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.nav-group-label{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size:10.5px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:#D98EA0;
+  margin:14px 8px 6px;
+}
+.nav-group-label:first-child{margin-top:2px;}
+.navlink{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-align:left;
+  width:100%;
+  background:none;
+  border:none;
+  color:#F1D3DA;
+  font-size:13.6px;
+  padding:9px 10px;
+  border-radius:9px;
+  cursor:pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.navlink .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:#D98EA0;
+  flex-shrink:0;
+}
+.navlink:hover{ background: rgba(255,255,255,0.08); color:#fff; }
+.navlink.active{
+  background: rgba(255,255,255,0.16);
+  color:#fff;
+  font-weight:600;
+}
+.navlink.active .dot{ background:#F6D174; }
+
+/* Main content */
+main{
+  flex:1;
+  min-width:0;
+  padding: 34px 46px 90px;
+  max-width:920px;
+}
+.panel{ display:none; }
+.panel.active{ display:block; animation: fadeUp .35s ease; }
+@keyframes fadeUp{
+  from{ opacity:0; transform:translateY(8px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.eyebrow{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size:12.5px;
+  color:var(--ruby);
+  font-weight:700;
+  margin-bottom:6px;
+}
+.eyebrow.teal{ color:var(--teal); }
+.eyebrow.gold{ color:var(--gold); }
+
+h2.title{
+  font-size:31px;
+  margin:0 0 10px;
+  line-height:1.18;
+  color:var(--ink);
+}
+p.lede{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size:15.5px;
+  line-height:1.65;
+  color:var(--ink-soft);
+  max-width:66ch;
+  margin: 0 0 26px;
+}
+
+.card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius: var(--radius);
+  padding:20px 22px;
+  margin-bottom:16px;
+  box-shadow: var(--shadow);
+}
+.card h3{
+  font-size:18px;
+  margin:0 0 8px;
+  color:var(--ruby-deep);
+}
+.card h3.teal{ color:var(--teal-deep); }
+.card p, .card li{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size:14.6px;
+  line-height:1.62;
+  color:var(--ink);
+}
+.card ul{ margin:6px 0 0; padding-left:20px; }
+
+.trap{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--gold-pale);
+  border-left:4px solid var(--gold);
+  border-radius:8px;
+  padding:13px 16px;
+  font-size:14px;
+  color:#6B4A0E;
+  margin: 10px 0 18px;
+}
+.trap b{ color:#5A3C08; }
+
+table.dtable{
+  width:100%;
+  border-collapse:collapse;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size:13.8px;
+  margin-bottom:6px;
+}
+table.dtable th{
+  text-align:left;
+  background: var(--ruby-pale);
+  color:var(--ruby-deep);
+  padding:9px 12px;
+  font-size:12px;
+  letter-spacing:0.01em;
+  border-bottom:2px solid var(--ruby);
+}
+table.dtable.teal th{
+  background:var(--teal-pale);
+  color:var(--teal-deep);
+  border-bottom:2px solid var(--teal);
+}
+table.dtable.gold th{
+  background:var(--gold-pale);
+  color:#6B4A0E;
+  border-bottom:2px solid var(--gold);
+}
+table.dtable td{
+  padding:10px 12px;
+  border-bottom:1px solid var(--line);
+  vertical-align:top;
+  line-height:1.5;
+}
+table.dtable tr:last-child td{ border-bottom:none; }
+table.dtable td:first-child{ font-weight:600; white-space:nowrap; }
+
+.pill{
+  display:inline-block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size:11px;
+  font-weight:700;
+  padding:3px 9px;
+  border-radius:20px;
+  background:var(--ruby);
+  color:#fff;
+  margin-right:6px;
+}
+.pill.teal{ background:var(--teal); }
+.pill.gold{ background:var(--gold); }
+
+.step-list{ counter-reset: step; list-style:none; padding:0; margin:0; }
+.step-list li{
+  counter-increment: step;
+  position:relative;
+  padding: 10px 0 10px 40px;
+  border-bottom:1px dashed var(--line);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size:14.4px;
+  line-height:1.55;
+}
+.step-list li:last-child{ border-bottom:none; }
+.step-list li::before{
+  content: counter(step);
+  position:absolute; left:0; top:8px;
+  width:26px;height:26px;
+  border-radius:50%;
+  background:var(--ruby);
+  color:#fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size:12.5px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+}
+.step-list.teal li::before{ background:var(--teal); }
+
+.mnemonic{
+  background: linear-gradient(135deg, var(--ruby), var(--ruby-deep));
+  color:#fff;
+  border-radius: var(--radius);
+  padding:20px 22px;
+  margin: 18px 0 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.mnemonic.teal{ background: linear-gradient(135deg, var(--teal), var(--teal-deep)); }
+.mnemonic .m-title{ font-size:12px; letter-spacing:0.06em; opacity:0.85; margin-bottom:10px; font-weight:700;}
+.mnemonic-word{
+  font-size:26px;
+  font-weight:800;
+  letter-spacing:0.06em;
+  margin-bottom:12px;
+  font-family: Georgia, serif;
+}
+.mnemonic-grid{ display:grid; gap:7px; }
+.mnemonic-grid div{ font-size:13.8px; line-height:1.5; }
+.mnemonic-grid b{ font-size:15px; }
+
+/* Flashcards */
+.deck-controls{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  display:flex; align-items:center; gap:14px; margin-bottom:20px;
+}
+.deck-controls button{
+  font-family: inherit;
+  border:none; cursor:pointer;
+  background: var(--ruby);
+  color:#fff;
+  padding:9px 16px;
+  border-radius:9px;
+  font-size:13.5px;
+  font-weight:600;
+}
+.deck-controls button.secondary{
+  background:#fff;
+  color:var(--ruby-deep);
+  border:1.5px solid var(--ruby);
+}
+.deck-progress{ font-size:13px; color:var(--ink-soft); }
+
+.flashcard-wrap{ perspective:1400px; max-width:560px; margin:0 auto 22px;}
+.flashcard{
+  position:relative;
+  height:260px;
+  width:100%;
+  cursor:pointer;
+  transform-style:preserve-3d;
+  transition: transform .5s cubic-bezier(.4,.2,.2,1);
+}
+.flashcard.flipped{ transform: rotateY(180deg); }
+.face{
+  position:absolute; inset:0;
+  backface-visibility:hidden;
+  border-radius:18px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center;
+  padding:30px;
+  box-shadow: var(--shadow);
+}
+.face.front{
+  background: linear-gradient(160deg,#fff, var(--ivory-deep));
+  border:2px solid var(--ruby);
+}
+.face.back{
+  background: linear-gradient(160deg, var(--ruby), var(--ruby-deep));
+  color:#fff;
+  transform: rotateY(180deg);
+}
+.face .tag{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase;
+  opacity:0.7; margin-bottom:14px;
+}
+.face .qtext{ font-size:19px; line-height:1.4; font-weight:600; color:var(--ink); }
+.face.back .qtext{ color:#fff; font-size:16px; font-weight:500; line-height:1.5;}
+.face .hint{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size:11.5px; color:var(--ink-soft); margin-top:16px; opacity:0.7;
+}
+
+/* Quiz */
+.quiz-top{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:18px; flex-wrap:wrap; gap:10px;
+}
+.quiz-progress-track{
+  flex:1; min-width:160px; height:9px; border-radius:6px;
+  background:var(--ruby-pale); overflow:hidden; margin: 0 14px;
+}
+.quiz-progress-fill{
+  height:100%; background: linear-gradient(90deg,var(--ruby),var(--gold));
+  width:0%; transition:width .4s ease;
+}
+.qcount{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size:13px; color:var(--ink-soft); white-space:nowrap;}
+.streak{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size:13px; font-weight:700; color:var(--gold); white-space:nowrap;
+}
+.qcard{
+  background:#fff; border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 26px 22px; box-shadow: var(--shadow);
+}
+.qcard .qprompt{
+  font-size:19px; line-height:1.45; margin-bottom:20px; color:var(--ink);
+}
+.opt{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  display:block; width:100%; text-align:left;
+  background: var(--ivory); border:1.5px solid var(--line);
+  border-radius:11px; padding:13px 16px; margin-bottom:10px;
+  font-size:14.4px; cursor:pointer; color:var(--ink);
+  transition: border-color .15s ease, background .15s ease;
+}
+.opt:hover{ border-color: var(--ruby); }
+.opt.correct{ background: var(--teal-pale); border-color:var(--teal); color:var(--teal-deep); font-weight:600;}
+.opt.incorrect{ background: var(--ruby-pale); border-color:var(--ruby); color:var(--ruby-deep); font-weight:600;}
+.opt.disabled{ pointer-events:none; opacity:0.75; }
+.opt.disabled.correct, .opt.disabled.incorrect{ opacity:1; }
+
+.rationale{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin-top:14px; padding:14px 16px; border-radius:10px;
+  background: var(--gold-pale); font-size:13.8px; line-height:1.55; color:#6B4A0E;
+  display:none;
+}
+.rationale.show{ display:block; }
+.qnext{
+  margin-top:16px; display:none;
+  font-family: inherit; border:none; cursor:pointer;
+  background: var(--ruby); color:#fff; padding:10px 20px; border-radius:9px;
+  font-size:13.6px; font-weight:600;
+}
+.qnext.show{ display:inline-block; }
+
+.results{ text-align:center; padding: 30px 10px; }
+.results .score{ font-size:52px; font-weight:800; color:var(--ruby-deep); font-family: Georgia, serif;}
+.results .scoretext{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color:var(--ink-soft); margin-bottom:20px;}
+.badge-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin: 18px 0 24px;}
+.badge{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: linear-gradient(135deg,var(--gold),#E9BE5F);
+  color:#5A3C08; padding:8px 14px; border-radius:20px; font-size:12.5px; font-weight:700;
+}
+
+::-webkit-scrollbar{ width:9px; }
+::-webkit-scrollbar-thumb{ background: rgba(124,21,48,0.25); border-radius:6px; }
+
+@media (max-width: 880px){
+  .app{ flex-direction:column; }
+  .sidebar{ width:100%; height:auto; position:relative; }
+  main{ padding: 24px 18px 70px; max-width:100%; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="kicker">HCC3 · EXAM 2</div>
+      <h1>Genetics &amp; Clotting</h1>
+      <div class="sub">Sickle Cell Disease · Hemophilia · ~20 questions</div>
+    </div>
+
+    <div class="xp-box">
+      <div class="xp-row"><span class="xp-label">STUDY XP</span><span class="xp-value" id="xpValue">0</span></div>
+      <div class="xp-bar-track"><div class="xp-bar-fill" id="xpBarFill"></div></div>
+      <div class="xp-level" id="xpLevelText">Level 1 · New Chart</div>
+    </div>
+
+    <nav class="navlist" id="navlist">
+      <div class="nav-group-label">Orientation</div>
+      <button class="navlink" data-panel="overview"><span class="dot"></span>Exam Blueprint</button>
+
+      <div class="nav-group-label">Sickle Cell Disease</div>
+      <button class="navlink" data-panel="scd-genetics"><span class="dot"></span>Genetic Transmission</button>
+      <button class="navlink" data-panel="scd-patho"><span class="dot"></span>Pathophysiology</button>
+      <button class="navlink" data-panel="scd-complications"><span class="dot"></span>Major Complications</button>
+      <button class="navlink" data-panel="scd-priorities"><span class="dot"></span>Nursing Priorities</button>
+      <button class="navlink" data-panel="scd-hydroxyurea"><span class="dot"></span>Hydroxyurea</button>
+      <button class="navlink" data-panel="scd-pain"><span class="dot"></span>Pain Medication</button>
+
+      <div class="nav-group-label">Hemophilia &amp; Clotting</div>
+      <button class="navlink" data-panel="hem-basics"><span class="dot"></span>Core Disorders</button>
+      <button class="navlink" data-panel="hem-signs"><span class="dot"></span>Bleeding Signs</button>
+      <button class="navlink" data-panel="hem-labs"><span class="dot"></span>Lab Interpretation</button>
+      <button class="navlink" data-panel="hem-care"><span class="dot"></span>Active Bleeding Care</button>
+      <button class="navlink" data-panel="hem-factor"><span class="dot"></span>Factor VIII Therapy</button>
+      <button class="navlink" data-panel="hem-precautions"><span class="dot"></span>Precautions &amp; Teaching</button>
+
+      <div class="nav-group-label">Big Picture</div>
+      <button class="navlink" data-panel="clot-vs-bleed"><span class="dot"></span>Clotting vs Bleeding</button>
+      <button class="navlink" data-panel="blood-products"><span class="dot"></span>Blood Products</button>
+      <button class="navlink" data-panel="counseling"><span class="dot"></span>Genetic Counseling</button>
+
+      <div class="nav-group-label">Practice</div>
+      <button class="navlink" data-panel="flashcards"><span class="dot"></span>Flashcards</button>
+      <button class="navlink" data-panel="quiz"><span class="dot"></span>NCLEX Quiz · 20Q</button>
+    </nav>
+  </aside>
+
+  <main>
+
+    <!-- OVERVIEW -->
+    <section class="panel" id="panel-overview">
+      <div class="eyebrow">HCC3 · EXAM 2 SCOPE</div>
+      <h2 class="title">Sickle Cell Disease, Hemophilia, and Clotting</h2>
+      <p class="lede">About 20 questions. This module covers assessment findings, complications, priority interventions, health promotion, medication teaching, lab interpretation, bleeding precautions, and blood product administration for the genetics and clotting content assigned to Exam 2.</p>
+
+      <div class="mnemonic">
+        <div class="m-title">THE ONE-LINE VERSION</div>
+        <div class="mnemonic-grid">
+          <div><b>Sickle cell</b> — autosomal recessive hemoglobin disorder that threatens <b>oxygenation and perfusion</b>. Think oxygenation, hydration, pain.</div>
+          <div><b>Hemophilia</b> — usually X-linked recessive clotting factor deficiency that threatens <b>hemostasis</b>. Think bleeding recognition, factor replacement, injury prevention.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Exam Blueprint</h3>
+        <table class="dtable">
+          <tr><th>Learning map target</th><th>What to know</th></tr>
+          <tr><td>Sickle cell genetics</td><td>Autosomal recessive transmission; disease vs. trait; counseling probabilities.</td></tr>
+          <tr><td>Sickle cell assessment</td><td>Pain, anemia, jaundice, hand-foot swelling, infection, neurologic and respiratory changes.</td></tr>
+          <tr><td>Sickle cell complications</td><td>Vaso-occlusive crisis, acute chest syndrome, stroke, infection/sepsis, splenic sequestration, priapism, organ injury.</td></tr>
+          <tr><td>Sickle cell priorities</td><td>Assess oxygenation/perfusion; hydrate; manage pain; evaluate fever; monitor fluids and electrolytes.</td></tr>
+          <tr><td>Hydroxyurea</td><td>Purpose, daily adherence, CBC monitoring, cytopenias, teratogenicity.</td></tr>
+          <tr><td>Hemophilia &amp; clotting</td><td>Risk factors and signs of excessive bleeding vs. excessive clotting; hemarthrosis; lab interpretation.</td></tr>
+          <tr><td>Hemophilia care</td><td>Control bleeding, administer recombinant factor VIII/IX, bleeding precautions, safe blood product administration.</td></tr>
+          <tr><td>Patient education</td><td>Genetic counseling, crisis prevention, medication safety, injury prevention, when to seek urgent care.</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Getting the most out of this guide</h3>
+        <ul>
+          <li>Work through the sections in order once, then jump around using the sidebar to target weak spots.</li>
+          <li>Flip through the <b>Flashcards</b> deck for quick recall drills before the quiz.</li>
+          <li>Finish with the <b>20-question NCLEX-style quiz</b> — every answer comes with a rationale, and you'll earn XP as you go.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SCD GENETICS -->
+    <section class="panel" id="panel-scd-genetics">
+      <div class="eyebrow">SICKLE CELL DISEASE</div>
+      <h2 class="title">Genetic Transmission</h2>
+      <p class="lede">Autosomal recessive inheritance drives every probability question on this topic.</p>
+
+      <div class="card">
+        <ul>
+          <li>Sickle cell disease is inherited in an <b>autosomal recessive</b> pattern. A person with disease inherits a pathogenic hemoglobin variant from each parent.</li>
+          <li>When <b>both parents have sickle cell trait</b>, every pregnancy carries a <b>25% chance of disease</b>, a <b>50% chance of trait</b>, and a <b>25% chance of neither</b>.</li>
+          <li>These probabilities <b>reset with every pregnancy</b>. A previous child's outcome does not change the next child's risk.</li>
+        </ul>
+      </div>
+
+      <div class="trap"><b>Exam trap:</b> Sickle cell trait is carrier status, not sickle cell disease. Do not label the 50% carrier outcome as "affected with disease."</div>
+
+      <div class="mnemonic">
+        <div class="m-title">PUNNETT SQUARE, IN WORDS</div>
+        <div class="mnemonic-grid">
+          <div><b>25%</b> — Disease (two pathogenic alleles)</div>
+          <div><b>50%</b> — Trait / carrier (one pathogenic allele)</div>
+          <div><b>25%</b> — Neither disease nor trait</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCD PATHO -->
+    <section class="panel" id="panel-scd-patho">
+      <div class="eyebrow">SICKLE CELL DISEASE</div>
+      <h2 class="title">Pathophysiology &amp; Findings</h2>
+      <p class="lede">Hemoglobin S polymerizes under stress — everything downstream follows from that one fact.</p>
+
+      <div class="card">
+        <table class="dtable">
+          <tr><th>What happens</th><th>Expected findings</th></tr>
+          <tr><td>Hgb S polymerizes</td><td>Rigid, sickle-shaped RBCs form with hypoxemia, dehydration, fever, acidosis, or increased O2 demand.</td></tr>
+          <tr><td>Vaso-occlusion</td><td>Severe pain; swollen hands/feet; joint, abdominal, chest, or extremity pain; ischemia and infarction.</td></tr>
+          <tr><td>Hemolysis</td><td>Chronic anemia, fatigue, pallor, jaundice, elevated reticulocyte count, possible gallstones.</td></tr>
+          <tr><td>Poor perfusion</td><td>Delayed cap refill, weak pulses, cool extremity, hematuria, reduced urine output, neuro changes, organ injury.</td></tr>
+          <tr><td>Functional asplenia</td><td>High risk for severe bacterial infection, especially in young children.</td></tr>
+          <tr><td>Chronic disease effects</td><td>Delayed growth/puberty, avascular necrosis, retinopathy, leg ulcers, renal damage, recurrent hospitalization.</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- SCD COMPLICATIONS -->
+    <section class="panel" id="panel-scd-complications">
+      <div class="eyebrow">SICKLE CELL DISEASE</div>
+      <h2 class="title">Major Complications</h2>
+      <p class="lede">Recognize the pattern fast — several of these are true emergencies.</p>
+
+      <div class="card">
+        <table class="dtable">
+          <tr><th>Complication</th><th>Recognize</th><th>Priority response</th></tr>
+          <tr><td>Vaso-occlusive crisis</td><td>Severe individualized pain, extremity/joint swelling, abdominal pain, ischemic findings</td><td>Assess ABCs and perfusion; hydrate; give prescribed analgesia; warmth and rest; monitor affected area.</td></tr>
+          <tr><td>Acute chest syndrome</td><td>New chest pain, fever, cough, tachypnea, dyspnea, hypoxemia, pneumonia-like findings</td><td>Emergency escalation; support oxygenation; ordered studies; treat pain; hydrate cautiously; antibiotics/transfusion as ordered.</td></tr>
+          <tr><td>Stroke</td><td>Facial droop, unilateral weakness, speech/vision change, severe headache, seizure, altered behavior, LOC</td><td>Activate emergency/stroke protocol; protect airway; check glucose and neuro status; prepare for urgent transfusion.</td></tr>
+          <tr><td>Splenic sequestration</td><td>Rapid spleen enlargement, profound anemia, pallor, tachycardia, hypotension, shock</td><td>Emergency circulatory support; notify provider immediately; prepare for transfusion. Recurrent episodes may need splenectomy.</td></tr>
+          <tr><td>Sepsis</td><td>Fever, lethargy, poor intake, tachycardia, hypotension, altered mental status</td><td>Treat fever as urgent: cultures/CBC as ordered, rapid antibiotics, fluids, close monitoring.</td></tr>
+          <tr><td>Priapism</td><td>Painful, prolonged erection</td><td>Urgent evaluation to prevent permanent ischemic damage.</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- SCD PRIORITIES -->
+    <section class="panel" id="panel-scd-priorities">
+      <div class="eyebrow">SICKLE CELL DISEASE</div>
+      <h2 class="title">Priority Nursing Interventions</h2>
+      <p class="lede">The same seven-step framework applies across almost every SCD scenario question.</p>
+
+      <ol class="step-list">
+        <li>Assess airway, breathing, oxygen saturation, circulation, temperature, pain, neurologic status, and the patient's usual crisis pattern.</li>
+        <li>Support oxygenation. Apply O2 when hypoxemia or significant respiratory compromise is present and reassess response. New chest symptoms need urgent escalation.</li>
+        <li>Restore and maintain hydration with oral or IV fluids as ordered. Monitor I&amp;O, daily weight when indicated, electrolytes, renal function, lung sounds, and fluid overload.</li>
+        <li>Treat pain promptly. Use prescribed multimodal therapy, reassess pain and sedation, avoid stereotyping or undertreating the patient.</li>
+        <li>Promote perfusion: rest, warmth, avoid constrictive clothing, keep extremities extended, avoid pressure such as a cuff on a painful limb.</li>
+        <li>Evaluate fever urgently for infection or sepsis. Obtain ordered CBC, cultures, chest imaging; give antibiotics promptly as prescribed.</li>
+        <li>Anticipate blood transfusion for selected severe anemia, stroke, acute chest syndrome, or other serious complications as ordered.</li>
+      </ol>
+
+      <div class="trap" style="margin-top:18px;"><b>Fluids &amp; electrolytes goal:</b> Adequate hydration without overload. Watch urine output, mucous membranes, weight, sodium/potassium, renal function, and respiratory status.</div>
+    </section>
+
+    <!-- HYDROXYUREA -->
+    <section class="panel" id="panel-scd-hydroxyurea">
+      <div class="eyebrow">SICKLE CELL DISEASE · MEDICATION</div>
+      <h2 class="title">Hydroxyurea Teaching</h2>
+      <p class="lede">One of the highest-yield medication-teaching topics in this module.</p>
+
+      <div class="card">
+        <table class="dtable">
+          <tr><th>Teaching point</th><th>What the patient should understand</th></tr>
+          <tr><td>Purpose</td><td>Increases fetal hemoglobin, decreases sickling and inflammation, reduces pain crises and acute chest syndrome; may reduce transfusions and hospitalizations.</td></tr>
+          <tr><td>Administration</td><td>Take the prescribed oral dose every day. It does not work well when taken inconsistently.</td></tr>
+          <tr><td>Monitoring</td><td>Frequent CBC and dose adjustment, especially early in therapy.</td></tr>
+          <tr><td>Major adverse effects</td><td>May suppress bone marrow — low WBCs, platelets, or worsening anemia.</td></tr>
+          <tr><td>Pregnancy safety</td><td>Teratogenic. Follow prescriber's contraception/pregnancy prevention instructions; contact provider before pregnancy.</td></tr>
+          <tr><td>When to report</td><td>Fever, infection signs, unusual bleeding/bruising, severe fatigue, or other cytopenia symptoms.</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- PAIN MEDS -->
+    <section class="panel" id="panel-scd-pain">
+      <div class="eyebrow">SICKLE CELL DISEASE · MEDICATION</div>
+      <h2 class="title">Pain Medication Focus</h2>
+      <p class="lede">Opioid safety monitoring plus one specific drug to avoid.</p>
+
+      <div class="card">
+        <h3>Morphine sulfate</h3>
+        <p>Prescribed for severe vaso-occlusive pain. Assess pain before and after dosing; monitor respiratory rate, oxygen saturation, sedation, blood pressure, bowel function, and fall risk.</p>
+      </div>
+      <div class="card">
+        <h3>Naloxone</h3>
+        <p>Should be available per policy for opioid-induced respiratory depression. Do not wait for severe respiratory compromise to escalate concerns.</p>
+      </div>
+      <div class="trap"><b>Avoid meperidine (Demerol)</b> when alternatives are available — normeperidine accumulation can provoke seizures.</div>
+    </section>
+
+    <!-- HEMOPHILIA BASICS -->
+    <section class="panel" id="panel-hem-basics">
+      <div class="eyebrow teal">HEMOPHILIA &amp; CLOTTING</div>
+      <h2 class="title">Core Disorders &amp; Inheritance</h2>
+      <p class="lede">Three disorders, one inheritance pattern to master.</p>
+
+      <div class="card">
+        <table class="dtable teal">
+          <tr><th>Disorder</th><th>Defect</th><th>High-yield clue</th></tr>
+          <tr><td>Hemophilia A</td><td>Factor VIII deficiency</td><td>Classic hemophilia; usually X-linked recessive; treat with factor VIII replacement.</td></tr>
+          <tr><td>Hemophilia B</td><td>Factor IX deficiency</td><td>"Christmas disease"; usually X-linked recessive; treat with factor IX replacement.</td></tr>
+          <tr><td>Von Willebrand disease</td><td>Deficient/dysfunctional vWF; factor VIII may be reduced</td><td>Mucosal bleeding and impaired platelet adhesion; inheritance depends on subtype.</td></tr>
+        </table>
+      </div>
+
+      <div class="mnemonic teal">
+        <div class="m-title">X-LINKED RECESSIVE PATTERN</div>
+        <div class="mnemonic-grid">
+          <div>More <b>males</b> are affected.</div>
+          <div>There is <b>no father-to-son</b> transmission (fathers pass a Y to sons).</div>
+          <div>An affected father passes his altered X to <b>all daughters</b> (who become carriers).</div>
+          <div>A carrier mother has a <b>50% chance</b> of passing the altered X in each pregnancy.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HEM SIGNS -->
+    <section class="panel" id="panel-hem-signs">
+      <div class="eyebrow teal">HEMOPHILIA &amp; CLOTTING</div>
+      <h2 class="title">Signs &amp; Symptoms of Bleeding</h2>
+      <p class="lede">Hemarthrosis and intracranial bleeding are the two findings tested most often.</p>
+
+      <div class="card">
+        <ul>
+          <li>Easy bruising, petechiae, purpura, prolonged bleeding after cuts, venipuncture, dental work, surgery, or trauma.</li>
+          <li>Epistaxis, gum bleeding, heavy menstrual bleeding, blood in urine or stool, hematemesis, or melena.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="teal">Hemarthrosis</h3>
+        <p>Bleeding into a joint causing pain, warmth, swelling, stiffness, decreased range of motion, and a flexed position. Repeated episodes can permanently damage the joint.</p>
+      </div>
+      <div class="card">
+        <h3 class="teal">Muscle bleeding</h3>
+        <p>Swelling, pain, firmness, decreased motion, and neurovascular compromise.</p>
+      </div>
+      <div class="trap"><b>Intracranial bleeding warning signs:</b> severe headache, vomiting, confusion, seizure, unequal pupils, weakness, or loss of consciousness. Treat head injury as an emergency even without external bleeding.</div>
+    </section>
+
+    <!-- HEM LABS -->
+    <section class="panel" id="panel-hem-labs">
+      <div class="eyebrow teal">HEMOPHILIA &amp; CLOTTING</div>
+      <h2 class="title">Laboratory Interpretation</h2>
+      <p class="lede">One pattern shows up again and again across NCLEX-style items.</p>
+
+      <div class="card">
+        <table class="dtable teal">
+          <tr><th>Test</th><th>Hemophilia A/B</th><th>Nursing interpretation</th></tr>
+          <tr><td>aPTT</td><td>Prolonged</td><td>Intrinsic pathway affected. Hold invasive procedures and notify provider when unexpected or associated with bleeding.</td></tr>
+          <tr><td>PT / INR</td><td>Usually normal</td><td>Extrinsic pathway is generally intact in isolated hemophilia.</td></tr>
+          <tr><td>Platelet count</td><td>Usually normal</td><td>Hemophilia is a clotting-factor problem, not a platelet-quantity problem.</td></tr>
+          <tr><td>Bleeding time / platelet function</td><td>Usually normal in hemophilia</td><td>May be abnormal in platelet disorders or von Willebrand disease.</td></tr>
+          <tr><td>Factor assay</td><td>Low VIII in A; low IX in B</td><td>Confirms the specific missing factor and guides replacement therapy.</td></tr>
+          <tr><td>Hgb &amp; Hct</td><td>May fall with significant blood loss</td><td>Trend values and assess hemodynamic status; a normal early result does not exclude acute bleeding.</td></tr>
+        </table>
+      </div>
+
+      <div class="mnemonic teal">
+        <div class="m-title">THE EXAM PATTERN</div>
+        <div class="mnemonic-word">↑aPTT · PT normal · platelets normal</div>
+        <div class="mnemonic-grid"><div>Factor assays distinguish hemophilia A from hemophilia B.</div></div>
+      </div>
+    </section>
+
+    <!-- HEM CARE -->
+    <section class="panel" id="panel-hem-care">
+      <div class="eyebrow teal">HEMOPHILIA &amp; CLOTTING</div>
+      <h2 class="title">Nursing Care for Active Bleeding</h2>
+      <p class="lede">Do not let diagnostics delay factor replacement in a suspected serious bleed.</p>
+
+      <ol class="step-list teal">
+        <li>Assess airway, breathing, circulation, hemodynamic stability, location/amount of bleeding, pain, and neurovascular status. Look for concealed internal bleeding.</li>
+        <li>Notify the provider or activate emergency response for major bleeding, head or abdominal trauma, airway bleeding, shock, neurologic changes, or uncontrolled hemorrhage.</li>
+        <li>Administer the prescribed clotting factor promptly. Do not delay factor replacement while waiting on all diagnostics when a serious bleed is suspected and emergency orders are active.</li>
+        <li>For joint or muscle bleeding: stop activity, rest, ice wrapped in cloth, gentle compression if prescribed, elevation. Do not massage the area.</li>
+        <li>After venipuncture, apply firm direct pressure longer than usual and reassess for bleeding or hematoma.</li>
+        <li>Monitor vital signs, pain, mental status, distal circulation, Hgb/Hct, urine output, and response to factor or blood products.</li>
+      </ol>
+    </section>
+
+    <!-- HEM FACTOR -->
+    <section class="panel" id="panel-hem-factor">
+      <div class="eyebrow teal">HEMOPHILIA &amp; CLOTTING</div>
+      <h2 class="title">Recombinant Factor VIII</h2>
+      <p class="lede">Targeted replacement — and it only covers one of the two classic hemophilias.</p>
+
+      <div class="card">
+        <ul>
+          <li>Replaces missing factor VIII in <b>hemophilia A</b>. It does <b>not</b> treat hemophilia B, which requires factor IX replacement.</li>
+          <li>Verify patient, product, prescribed dose, route, venous access, and indication. Administer per product and facility guidance.</li>
+          <li>Monitor whether bleeding, pain, swelling, and range of motion improve. Watch for hypersensitivity and the development of factor inhibitors when therapy becomes less effective.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- HEM PRECAUTIONS -->
+    <section class="panel" id="panel-hem-precautions">
+      <div class="eyebrow teal">HEMOPHILIA &amp; CLOTTING</div>
+      <h2 class="title">Bleeding Precautions &amp; Education</h2>
+      <p class="lede">Everyday injury prevention rules that show up as "which statement indicates understanding" questions.</p>
+
+      <div class="card">
+        <ul>
+          <li>Avoid aspirin and other platelet-impairing medications unless specifically prescribed. Use acetaminophen when appropriate and ordered.</li>
+          <li>Avoid IM injections, rectal temperatures, unnecessary invasive procedures, and contact sports or high-trauma activities.</li>
+          <li>Use a soft toothbrush and consistent preventive dental care. Apply prolonged pressure after needle sticks.</li>
+          <li>Wear medical identification and keep the home factor plan, supplies, emergency contacts, and treatment center information accessible.</li>
+          <li>Seek urgent care after head, neck, abdominal, or major trauma; uncontrolled bleeding; neurologic changes; breathing difficulty; or severe joint swelling and pain.</li>
+          <li>Use genetic counseling before pregnancy or when discussing reproductive risk — accurate, non-directive, confidential, patient-centered.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CLOT VS BLEED -->
+    <section class="panel" id="panel-clot-vs-bleed">
+      <div class="eyebrow gold">BIG PICTURE</div>
+      <h2 class="title">Excessive Clotting vs. Excessive Bleeding</h2>
+      <p class="lede">Risk factors raise suspicion — assessment findings and diagnostics confirm the problem.</p>
+
+      <div class="card">
+        <table class="dtable gold">
+          <tr><th>Feature</th><th>Excessive clotting</th><th>Excessive bleeding</th></tr>
+          <tr><td>Common predispositions</td><td>Prior VTE, immobility, surgery/trauma, malignancy, pregnancy/estrogen therapy, obesity, smoking, dehydration, central venous catheter, older age, inherited thrombophilia (e.g., factor V Leiden)</td><td>Hemophilia or von Willebrand disease, thrombocytopenia, liver disease, vitamin K deficiency, anticoagulants/antiplatelets, bone marrow suppression, major trauma, surgery, DIC</td></tr>
+          <tr><td>Typical findings</td><td>Unilateral leg swelling, warmth, redness, tenderness; sudden dyspnea/chest pain; tachycardia; hypoxemia; neuro deficit if arterial flow is blocked</td><td>Bruising, petechiae, mucosal bleeding, prolonged oozing, hemarthrosis, hematuria, GI bleeding, hypotension, tachycardia, pallor, falling hemoglobin</td></tr>
+          <tr><td>Immediate concern</td><td>Embolization or loss of blood flow to lung, brain, heart, or limb</td><td>Hemorrhagic shock or concealed bleeding into brain, airway, chest, abdomen, joint, or muscle</td></tr>
+          <tr><td>Nursing response</td><td>Assess ABCs, oxygenation, perfusion; do not massage a suspected DVT; notify provider; anticipate imaging and anticoagulation as ordered</td><td>Apply direct pressure when appropriate, avoid further trauma, notify provider, obtain ordered labs, give factor/blood products, monitor hemodynamics</td></tr>
+        </table>
+      </div>
+
+      <div class="trap"><b>Do not confuse risk with diagnosis:</b> risk factors increase suspicion, but assessment findings and diagnostic studies determine the problem. In a bleeding patient, stabilize first and investigate the cause concurrently.</div>
+    </section>
+
+    <!-- BLOOD PRODUCTS -->
+    <section class="panel" id="panel-blood-products">
+      <div class="eyebrow gold">BIG PICTURE</div>
+      <h2 class="title">Blood Product Administration</h2>
+      <p class="lede">Safety checklist plus a quick reference for which product does what.</p>
+
+      <ol class="step-list">
+        <li>Verify the order, indication, consent, patient identity, blood component, compatibility, expiration, and required baseline assessment per policy.</li>
+        <li>Use approved blood tubing and normal saline. Follow facility policy for infusion pumps, rates, independent verification, and maximum hang time.</li>
+        <li>Obtain baseline vital signs, remain with the patient during the initial high-risk period, and reassess vitals at required intervals.</li>
+        <li>Watch for fever, chills, flushing, rash, itching, dyspnea, wheezing, chest/back pain, anxiety, nausea, hypotension, tachycardia, or dark urine.</li>
+        <li>If a transfusion reaction is suspected: <b>stop the blood immediately</b>, keep the vein open with new tubing and normal saline, assess ABCs and vitals, notify provider and blood bank, follow policy for specimens/documentation. Do not restart the unit.</li>
+      </ol>
+
+      <div class="card" style="margin-top:18px;">
+        <table class="dtable gold">
+          <tr><th>Product</th><th>Primary use in this module</th></tr>
+          <tr><td>Packed RBCs</td><td>Increase oxygen-carrying capacity after significant blood loss or severe anemia. Do not replace the missing clotting factor.</td></tr>
+          <tr><td>Platelets</td><td>Treat thrombocytopenia or platelet dysfunction. Not routinely indicated for uncomplicated factor VIII or IX deficiency.</td></tr>
+          <tr><td>Fresh frozen plasma</td><td>Provides multiple clotting factors when broad replacement is needed and a specific concentrate is unavailable or not indicated.</td></tr>
+          <tr><td>Cryoprecipitate</td><td>Provides fibrinogen, factor VIII, factor XIII, and von Willebrand factor; used mainly for low fibrinogen per orders/policy.</td></tr>
+          <tr><td>Recombinant factor concentrate</td><td>Preferred targeted replacement for the specific deficiency, e.g., recombinant factor VIII for hemophilia A.</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- COUNSELING -->
+    <section class="panel" id="panel-counseling">
+      <div class="eyebrow gold">BIG PICTURE</div>
+      <h2 class="title">Genetic Counseling Essentials</h2>
+      <p class="lede">The "non-directive" theme applies across every genetics topic on this exam.</p>
+
+      <div class="card">
+        <ul>
+          <li>Collect a three-generation family history when possible: disease, carrier status, early deaths, bleeding history, relevant ethnicity/ancestry, and consanguinity.</li>
+          <li>Explain inheritance probabilities clearly. Use "with each pregnancy" — risk resets every time.</li>
+          <li>Remain <b>non-directive</b>. Provide education, testing information, referrals, counseling, and support without telling the patient what reproductive decision to make.</li>
+          <li>Protect privacy and confidentiality, assess coping and psychological safety, and confirm understanding using teach-back.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FLASHCARDS -->
+    <section class="panel" id="panel-flashcards">
+      <div class="eyebrow">PRACTICE</div>
+      <h2 class="title">Flashcards</h2>
+      <p class="lede">Tap a card to flip it. Work through the deck front to back, then shuffle for a harder round.</p>
+
+      <div class="deck-controls">
+        <button id="fcPrev" class="secondary">← Prev</button>
+        <button id="fcFlip">Flip card</button>
+        <button id="fcNext">Next →</button>
+        <button id="fcShuffle" class="secondary">Shuffle</button>
+        <span class="deck-progress" id="fcProgress">Card 1 / 16</span>
+      </div>
+
+      <div class="flashcard-wrap">
+        <div class="flashcard" id="flashcard">
+          <div class="face front">
+            <div class="tag" id="fcFrontTag">Sickle Cell</div>
+            <div class="qtext" id="fcFrontText">Loading…</div>
+            <div class="hint">Tap to reveal answer</div>
+          </div>
+          <div class="face back">
+            <div class="tag" id="fcBackTag">Answer</div>
+            <div class="qtext" id="fcBackText">Loading…</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="panel" id="panel-quiz">
+      <div class="eyebrow">PRACTICE</div>
+      <h2 class="title">NCLEX-Style Quiz</h2>
+      <p class="lede">20 questions, one attempt each, rationale after every answer. Earn XP for every correct response — bonus XP for streaks.</p>
+
+      <div id="quizArea">
+        <div class="quiz-top">
+          <span class="qcount" id="quizCount">Question 1 / 20</span>
+          <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+          <span class="streak" id="quizStreak">🔥 Streak: 0</span>
+        </div>
+        <div class="qcard">
+          <div class="qprompt" id="qPrompt">Loading…</div>
+          <div id="qOptions"></div>
+          <div class="rationale" id="qRationale"></div>
+          <button class="qnext" id="qNextBtn">Next question →</button>
+        </div>
+      </div>
+
+      <div id="resultsArea" style="display:none;">
+        <div class="qcard results">
+          <div class="scoretext">Final score</div>
+          <div class="score" id="finalScore">0 / 20</div>
+          <div class="scoretext" id="finalXp">+0 XP earned</div>
+          <div class="badge-row" id="badgeRow"></div>
+          <button id="retakeBtn" style="font-family:inherit;border:none;cursor:pointer;background:var(--ruby);color:#fff;padding:11px 22px;border-radius:9px;font-size:14px;font-weight:600;">Retake quiz</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+/* ---------- Navigation ---------- */
+const navlinks = document.querySelectorAll('.navlink');
+const panels = document.querySelectorAll('.panel');
+
+function showPanel(id){
+  panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
+  navlinks.forEach(l => l.classList.toggle('active', l.dataset.panel === id));
+  document.querySelector('main').scrollTo({top:0, behavior:'instant'});
+  window.scrollTo({top:0, behavior:'instant'});
+}
+navlinks.forEach(l => l.addEventListener('click', () => showPanel(l.dataset.panel)));
+showPanel('overview');
+
+/* ---------- XP / Gamification ---------- */
+let xp = 0;
+const levels = [
+  {min:0, label:"Level 1 · New Chart"},
+  {min:40, label:"Level 2 · Floor Orientee"},
+  {min:90, label:"Level 3 · Confident Care"},
+  {min:150, label:"Level 4 · Charge Nurse Mindset"},
+  {min:220, label:"Level 5 · Exam-Ready"},
+];
+function addXp(amount){
+  xp += amount;
+  document.getElementById('xpValue').textContent = xp;
+  let current = levels[0];
+  for(const lv of levels){ if(xp >= lv.min) current = lv; }
+  document.getElementById('xpLevelText').textContent = current.label;
+  const idx = levels.indexOf(current);
+  const next = levels[idx+1];
+  let pct = 100;
+  if(next){ pct = Math.min(100, Math.round(((xp - current.min) / (next.min - current.min)) * 100)); }
+  document.getElementById('xpBarFill').style.width = pct + '%';
+}
+addXp(0);
+
+/* ---------- Flashcards ---------- */
+const flashcards = [
+  {tag:"Sickle Cell · Genetics", q:"Both parents have sickle cell trait. Chance of disease each pregnancy?", a:"25% disease, 50% trait, 25% neither — and it resets with every pregnancy."},
+  {tag:"Sickle Cell · Trap", q:"Is sickle cell trait the same as sickle cell disease?", a:"No. Trait is carrier status (one pathogenic allele). Disease requires two."},
+  {tag:"Sickle Cell · Patho", q:"What triggers hemoglobin S to polymerize?", a:"Hypoxemia, dehydration, fever, acidosis, or increased oxygen demand."},
+  {tag:"Sickle Cell · Complication", q:"New chest pain, fever, cough, tachypnea, hypoxemia — what is this?", a:"Acute chest syndrome — an emergency requiring oxygen support and urgent workup."},
+  {tag:"Sickle Cell · Complication", q:"Rapid spleen enlargement, profound anemia, and shock?", a:"Splenic sequestration crisis — emergency circulatory support, notify provider immediately."},
+  {tag:"Sickle Cell · Complication", q:"Why does sickle cell disease cause functional asplenia risk?", a:"Repeated splenic damage raises the risk of severe bacterial infection, especially in young children."},
+  {tag:"Sickle Cell · Medication", q:"What does hydroxyurea do?", a:"Increases fetal hemoglobin, decreasing sickling, pain crises, and acute chest syndrome."},
+  {tag:"Sickle Cell · Medication", q:"What lab must be monitored closely on hydroxyurea?", a:"CBC — bone marrow suppression can lower WBCs, platelets, or worsen anemia."},
+  {tag:"Sickle Cell · Medication", q:"Which opioid should generally be avoided in sickle cell pain management?", a:"Meperidine (Demerol) — normeperidine accumulation can provoke seizures."},
+  {tag:"Hemophilia · Inheritance", q:"Can a father pass an X-linked hemophilia gene to his son?", a:"No — fathers pass a Y chromosome to sons. All daughters of an affected father become carriers."},
+  {tag:"Hemophilia · Basics", q:"Hemophilia A vs. B — which factor is missing in each?", a:"A = Factor VIII deficiency. B = Factor IX deficiency (\"Christmas disease\")."},
+  {tag:"Hemophilia · Assessment", q:"What is hemarthrosis?", a:"Bleeding into a joint — pain, warmth, swelling, stiffness, and reduced range of motion."},
+  {tag:"Hemophilia · Labs", q:"What is the classic hemophilia lab pattern?", a:"Prolonged aPTT with a normal PT and usually normal platelet count."},
+  {tag:"Hemophilia · Care", q:"After a head injury in a hemophilia patient — what's the priority?", a:"Treat as an emergency for intracranial bleeding and give factor replacement promptly, even with no visible bleeding."},
+  {tag:"Hemophilia · Teaching", q:"Which common OTC medication should be avoided unless prescribed?", a:"Aspirin and other platelet-impairing medications; acetaminophen is preferred when appropriate."},
+  {tag:"Blood Products", q:"First action for a suspected transfusion reaction?", a:"Stop the transfusion immediately, then keep the vein open with new tubing and normal saline while assessing and notifying the team."},
+];
+let fcIndex = 0;
+let fcFlipped = false;
+
+function renderFlashcard(){
+  const c = flashcards[fcIndex];
+  document.getElementById('fcFrontTag').textContent = c.tag;
+  document.getElementById('fcFrontText').textContent = c.q;
+  document.getElementById('fcBackTag').textContent = "Answer";
+  document.getElementById('fcBackText').textContent = c.a;
+  document.getElementById('fcProgress').textContent = `Card ${fcIndex+1} / ${flashcards.length}`;
+  document.getElementById('flashcard').classList.remove('flipped');
+  fcFlipped = false;
+}
+document.getElementById('flashcard').addEventListener('click', () => {
+  fcFlipped = !fcFlipped;
+  document.getElementById('flashcard').classList.toggle('flipped', fcFlipped);
+});
+document.getElementById('fcFlip').addEventListener('click', () => {
+  fcFlipped = !fcFlipped;
+  document.getElementById('flashcard').classList.toggle('flipped', fcFlipped);
+});
+document.getElementById('fcNext').addEventListener('click', () => {
+  fcIndex = (fcIndex + 1) % flashcards.length;
+  renderFlashcard();
+});
+document.getElementById('fcPrev').addEventListener('click', () => {
+  fcIndex = (fcIndex - 1 + flashcards.length) % flashcards.length;
+  renderFlashcard();
+});
+document.getElementById('fcShuffle').addEventListener('click', () => {
+  for(let i = flashcards.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+  }
+  fcIndex = 0;
+  renderFlashcard();
+});
+renderFlashcard();
+
+/* ---------- Quiz ---------- */
+const quiz = [
+  {q:"Two parents both have sickle cell trait. What is the chance of sickle cell disease in each pregnancy?",
+   opts:["25%","50%","75%","0%"], correct:0,
+   r:"25%. The remaining probabilities are 50% trait and 25% neither disease nor trait — and this resets with every pregnancy."},
+  {q:"Which findings most strongly suggest acute chest syndrome?",
+   opts:["New chest pain, fever, cough, tachypnea, and hypoxemia","A painful, prolonged erection","Rapid spleen enlargement with shock","Petechiae and prolonged bleeding after venipuncture"], correct:0,
+   r:"New chest pain, fever, cough, tachypnea, dyspnea, or hypoxemia point to acute chest syndrome — an emergency requiring urgent escalation."},
+  {q:"What three treatment priorities are emphasized for vaso-occlusive crisis?",
+   opts:["Oxygenation assessment/support, hydration, and prompt pain control","Splenectomy, antibiotics, and transfusion","Factor VIII replacement, ice, and elevation","Genetic counseling, contraception, and teach-back"], correct:0,
+   r:"Oxygenation, hydration with fluid/electrolyte monitoring, and prompt pain control are the three core priorities in a vaso-occlusive crisis."},
+  {q:"A child with sickle cell disease has fever and lethargy. What is the priority?",
+   opts:["Urgent evaluation for infection/sepsis with ordered cultures/labs and prompt antibiotics","Reassure the family and recheck in 24 hours","Administer hydroxyurea immediately","Apply ice to the painful joints"], correct:0,
+   r:"Fever in sickle cell disease is treated as urgent for infection or sepsis — ordered cultures and CBC, with rapid antibiotics."},
+  {q:"Which crisis causes rapid splenic enlargement, profound anemia, and shock?",
+   opts:["Splenic sequestration crisis","Acute chest syndrome","Vaso-occlusive crisis","Priapism"], correct:0,
+   r:"Splenic sequestration crisis — an emergency requiring circulatory support and immediate provider notification; recurrent episodes may need splenectomy."},
+  {q:"Why does sickle cell disease cause jaundice?",
+   opts:["Accelerated red blood cell destruction releases bilirubin during hemolysis","Liver failure from iron overload","Vitamin K deficiency","Excess bilirubin from blood transfusions alone"], correct:0,
+   r:"Hemolysis from sickling destroys red blood cells faster than normal, releasing bilirubin and causing jaundice."},
+  {q:"What does hydroxyurea do?",
+   opts:["Increases fetal hemoglobin and reduces sickling, pain crises, and acute chest syndrome","Replaces missing factor VIII","Prevents venous thrombus formation","Treats bacterial sepsis directly"], correct:0,
+   r:"Hydroxyurea increases fetal hemoglobin, which decreases sickling complications, pain crises, and acute chest syndrome."},
+  {q:"What laboratory monitoring is essential with hydroxyurea therapy?",
+   opts:["CBC, because bone marrow suppression may lower white cells, platelets, or red cells","Liver panel only","Urinalysis only","Coagulation panel only"], correct:0,
+   r:"Frequent CBC monitoring is essential because hydroxyurea can suppress bone marrow, causing cytopenias."},
+  {q:"What reproductive teaching is essential for a patient starting hydroxyurea?",
+   opts:["It is teratogenic — follow prescribed contraception and contact the provider before pregnancy","It is safe throughout pregnancy","It improves fertility","No reproductive precautions are needed"], correct:0,
+   r:"Hydroxyurea is teratogenic. Patients need contraception guidance and should contact the provider before attempting pregnancy."},
+  {q:"What assessments are essential after administering IV morphine for a vaso-occlusive crisis?",
+   opts:["Pain relief, respiratory rate, oxygen saturation, sedation, and blood pressure","Blood glucose only","Reflexes and gait only","Skin turgor only"], correct:0,
+   r:"Opioid safety monitoring includes pain relief along with respiratory rate, oxygen saturation, sedation level, and blood pressure."},
+  {q:"Which factor is deficient in hemophilia A?",
+   opts:["Factor VIII","Factor IX","Von Willebrand factor","Factor V"], correct:0,
+   r:"Hemophilia A is a factor VIII deficiency, treated with factor VIII replacement."},
+  {q:"Which factor is deficient in hemophilia B?",
+   opts:["Factor IX","Factor VIII","Platelets","Fibrinogen"], correct:0,
+   r:"Hemophilia B (\"Christmas disease\") is a factor IX deficiency, treated with factor IX replacement."},
+  {q:"What laboratory pattern is expected in hemophilia?",
+   opts:["Prolonged aPTT with normal PT and usually normal platelet count","Prolonged PT with normal aPTT","Low platelet count alone","Prolonged bleeding time alone"], correct:0,
+   r:"Hemophilia classically shows a prolonged aPTT (intrinsic pathway) with a normal PT and usually normal platelets."},
+  {q:"What is hemarthrosis?",
+   opts:["Bleeding into a joint, causing pain, swelling, warmth, and reduced range of motion","Bleeding into the brain","Bleeding into the peritoneum","Bleeding under the nail bed"], correct:0,
+   r:"Hemarthrosis is bleeding into a joint. Repeated episodes can permanently damage the joint."},
+  {q:"What is the priority after a patient with hemophilia hits their head?",
+   opts:["Emergency evaluation for intracranial bleeding and prompt factor replacement as ordered","Ice the area and observe at home","Wait for symptoms to appear before acting","Administer aspirin for pain relief"], correct:0,
+   r:"Head trauma in hemophilia is treated as an emergency for intracranial bleeding, with prompt factor replacement even without visible bleeding."},
+  {q:"What should the nurse do after venipuncture in a patient with hemophilia?",
+   opts:["Apply firm direct pressure longer than usual and reassess for hematoma","Apply brief pressure then bandage as usual","Elevate and massage the site","Apply heat immediately"], correct:0,
+   r:"Firm, prolonged direct pressure after venipuncture helps prevent hematoma formation in patients with clotting factor deficiencies."},
+  {q:"What medication should a patient with hemophilia generally avoid unless specifically prescribed?",
+   opts:["Aspirin","Acetaminophen","Factor VIII concentrate","Antibiotics"], correct:0,
+   r:"Aspirin and other platelet-impairing medications increase bleeding risk and should be avoided unless specifically prescribed."},
+  {q:"What does recombinant factor VIII treat?",
+   opts:["Hemophilia A","Hemophilia B","Von Willebrand disease only","Thrombocytopenia"], correct:0,
+   r:"Recombinant factor VIII replaces the missing factor in hemophilia A. It does not treat hemophilia B."},
+  {q:"What is the first nursing action for a suspected blood transfusion reaction?",
+   opts:["Stop the transfusion immediately, then maintain IV access with new tubing and normal saline","Slow the infusion rate and continue monitoring","Give an antihistamine and continue the transfusion","Increase the rate to finish the unit quickly"], correct:0,
+   r:"Stop the transfusion immediately first, then keep the vein open with new tubing and normal saline while assessing and notifying the team."},
+  {q:"Can a father transmit an X-linked hemophilia gene directly to his son?",
+   opts:["No — fathers pass a Y chromosome to sons, so there is no father-to-son X-linked transmission","Yes, always","Only if the mother is also a carrier","Only in hemophilia B"], correct:0,
+   r:"Fathers pass a Y chromosome to sons, so X-linked traits cannot pass from father to son. Daughters of an affected father are obligate carriers."},
+];
+
+let qIndex = 0;
+let score = 0;
+let streak = 0;
+let earnedXp = 0;
+let answered = false;
+
+function renderQuestion(){
+  answered = false;
+  const item = quiz[qIndex];
+  document.getElementById('quizCount').textContent = `Question ${qIndex+1} / ${quiz.length}`;
+  document.getElementById('quizProgressFill').style.width = `${(qIndex/quiz.length)*100}%`;
+  document.getElementById('quizStreak').textContent = `🔥 Streak: ${streak}`;
+  document.getElementById('qPrompt').textContent = item.q;
+  document.getElementById('qRationale').classList.remove('show');
+  document.getElementById('qRationale').textContent = '';
+  document.getElementById('qNextBtn').classList.remove('show');
+
+  const optsWrap = document.getElementById('qOptions');
+  optsWrap.innerHTML = '';
+  item.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => selectAnswer(i));
+    optsWrap.appendChild(btn);
+  });
+}
+
+function selectAnswer(i){
+  if(answered) return;
+  answered = true;
+  const item = quiz[qIndex];
+  const opts = document.querySelectorAll('#qOptions .opt');
+  opts.forEach((btn, idx) => {
+    btn.classList.add('disabled');
+    if(idx === item.correct) btn.classList.add('correct');
+    if(idx === i && i !== item.correct) btn.classList.add('incorrect');
+  });
+  if(i === item.correct){
+    score++;
+    streak++;
+    let gained = 10 + (streak >= 3 ? 5 : 0);
+    earnedXp += gained;
+    addXp(gained);
+  } else {
+    streak = 0;
+  }
+  document.getElementById('quizStreak').textContent = `🔥 Streak: ${streak}`;
+  const rBox = document.getElementById('qRationale');
+  rBox.textContent = item.r;
+  rBox.classList.add('show');
+  document.getElementById('qNextBtn').classList.add('show');
+}
+
+document.getElementById('qNextBtn').addEventListener('click', () => {
+  qIndex++;
+  if(qIndex >= quiz.length){
+    finishQuiz();
+  } else {
+    renderQuestion();
+  }
+});
+
+function finishQuiz(){
+  document.getElementById('quizArea').style.display = 'none';
+  document.getElementById('resultsArea').style.display = 'block';
+  document.getElementById('finalScore').textContent = `${score} / ${quiz.length}`;
+  document.getElementById('finalXp').textContent = `+${earnedXp} XP earned`;
+
+  const badgeRow = document.getElementById('badgeRow');
+  badgeRow.innerHTML = '';
+  const pct = score / quiz.length;
+  const badges = [];
+  if(pct === 1) badges.push("🏆 Perfect Chart");
+  else if(pct >= 0.85) badges.push("⭐ Exam Ready");
+  else if(pct >= 0.7) badges.push("📈 Solid Foundation");
+  else badges.push("🔁 Keep Reviewing");
+  if(streak >= 5) badges.push("🔥 Streak Master");
+  badges.forEach(b => {
+    const el = document.createElement('div');
+    el.className = 'badge';
+    el.textContent = b;
+    badgeRow.appendChild(el);
+  });
+}
+
+document.getElementById('retakeBtn').addEventListener('click', () => {
+  qIndex = 0; score = 0; streak = 0; earnedXp = 0;
+  document.getElementById('quizArea').style.display = 'block';
+  document.getElementById('resultsArea').style.display = 'none';
+  renderQuestion();
+});
+
+renderQuestion();
+</script>
+</body>
+</html>
