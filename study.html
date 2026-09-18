@@ -1,0 +1,1134 @@
+<title>Sickle, Cell & Sight</title>
+<meta name="description" content="Case-based critical-thinking study tool for HCC3 Exam 2: cellular regulation, sensory perception, genetics and clotting.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Libre+Franklin:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{
+  --bg:#faf7f1;
+  --surface:#ffffff;
+  --surface-2:#f2ede2;
+  --ink:#231f1a;
+  --ink-soft:#5a5347;
+  --line:#e5ddcc;
+  --onco:#c74b3d;
+  --onco-soft:#f7e2dd;
+  --sensory:#3457c7;
+  --sensory-soft:#e1e6fa;
+  --heme:#9c3a76;
+  --heme-soft:#f3e0ec;
+  --good:#1c8a5c;
+  --good-soft:#dcf1e6;
+  --warn:#b7801f;
+  --warn-soft:#faedd3;
+  --bad:#c62828;
+  --bad-soft:#fbe0df;
+  --accent:#c74b3d;
+  --shadow: 0 1px 2px rgba(35,31,26,.06), 0 8px 24px -12px rgba(35,31,26,.18);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#191510;
+    --surface:#231e17;
+    --surface-2:#2b2419;
+    --ink:#f3ede1;
+    --ink-soft:#c4b9a5;
+    --line:#3a3225;
+    --onco:#e8776a;
+    --onco-soft:#3a2320;
+    --sensory:#7f97e8;
+    --sensory-soft:#212a45;
+    --heme:#d780b0;
+    --heme-soft:#3a2233;
+    --good:#5fc596;
+    --good-soft:#173327;
+    --warn:#e0b25c;
+    --warn-soft:#3a2c12;
+    --bad:#f0847c;
+    --bad-soft:#3c1f1d;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#191510;
+  --surface:#231e17;
+  --surface-2:#2b2419;
+  --ink:#f3ede1;
+  --ink-soft:#c4b9a5;
+  --line:#3a3225;
+  --onco:#e8776a;
+  --onco-soft:#3a2320;
+  --sensory:#7f97e8;
+  --sensory-soft:#212a45;
+  --heme:#d780b0;
+  --heme-soft:#3a2233;
+  --good:#5fc596;
+  --good-soft:#173327;
+  --warn:#e0b25c;
+  --warn-soft:#3a2c12;
+  --bad:#f0847c;
+  --bad-soft:#3c1f1d;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Libre Franklin',ui-sans-serif,system-ui,sans-serif;
+  margin:0;
+  padding-inline:0;
+  min-height:100%;
+}
+h1,h2,h3,h4{font-family:'Fraunces',ui-serif,Georgia,serif; text-wrap:balance; margin:0 0 .3em;}
+p{line-height:1.55;}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;}
+.app{display:flex; min-height:100vh;}
+
+/* ---- Sidebar ---- */
+.sidebar{
+  width:230px; flex:0 0 230px;
+  background:var(--surface);
+  border-right:1px solid var(--line);
+  padding:20px 14px calc(20px + env(safe-area-inset-bottom,0px));
+  position:sticky; top:0; align-self:flex-start; height:100vh; overflow-y:auto;
+}
+.brand{padding:4px 8px 18px;}
+.brand .kicker{font-size:11px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-soft); font-weight:700;}
+.brand h1{font-size:22px; margin-top:2px; line-height:1.1;}
+.navgroup{margin-bottom:16px;}
+.navlabel{font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-soft); font-weight:700; padding:0 10px; margin-bottom:6px;}
+.navbtn{
+  display:flex; align-items:center; gap:9px; width:100%; text-align:left;
+  border:none; background:none; color:var(--ink); font:inherit; font-size:14.5px; font-weight:600;
+  padding:9px 10px; border-radius:9px; cursor:pointer; margin-bottom:2px;
+}
+.navbtn .dot{width:8px;height:8px;border-radius:50%; flex:0 0 auto; background:var(--ink-soft);}
+.navbtn:hover{background:var(--surface-2);}
+.navbtn.active{background:var(--surface-2); box-shadow:inset 3px 0 0 var(--accent-cur, var(--accent));}
+.xpcard{
+  margin-top:10px; background:var(--surface-2); border:1px solid var(--line); border-radius:14px; padding:12px;
+}
+.xpcard .row{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;}
+.xpcard .lvl{font-family:'Fraunces'; font-size:19px; font-weight:600;}
+.xpcard .pts{font-size:11.5px; color:var(--ink-soft); font-family:'IBM Plex Mono';}
+.bar{height:8px; border-radius:5px; background:var(--line); overflow:hidden;}
+.bar > i{display:block; height:100%; background:linear-gradient(90deg,var(--onco),var(--heme)); border-radius:5px; transition:width .4s ease;}
+.streak{font-size:11.5px; color:var(--ink-soft); margin-top:8px;}
+
+/* ---- Main ---- */
+.main{flex:1; min-width:0; padding:28px 34px 80px; max-width:980px;}
+.view{display:none;}
+.view.active{display:block; animation: fade .35s ease;}
+@keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+.pagehead{margin-bottom:22px;}
+.pagehead .eyebrow{font-size:12px; letter-spacing:.08em; text-transform:uppercase; font-weight:700;}
+.pagehead p.lede{color:var(--ink-soft); max-width:64ch; margin-top:6px;}
+
+.tag-onco{color:var(--onco);} .tag-sensory{color:var(--sensory);} .tag-heme{color:var(--heme);}
+
+/* generic surfaces */
+.card{background:var(--surface); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow);}
+.pad{padding:20px;}
+.grid{display:grid; gap:14px;}
+.grid.two{grid-template-columns:1fr 1fr;}
+.grid.three{grid-template-columns:repeat(3,1fr);}
+@media (max-width:760px){ .grid.two,.grid.three{grid-template-columns:1fr;} .main{padding:20px 16px 70px;} .sidebar{position:fixed; z-index:40; transform:translateX(-104%); transition:transform .25s ease; box-shadow:0 0 0 100vmax rgba(0,0,0,0); }
+  .sidebar.open{transform:translateX(0); box-shadow:0 0 40px rgba(0,0,0,.25);} .menubtn{display:inline-flex !important;} .app{display:block;} }
+.menubtn{display:none; align-items:center; gap:8px; border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:10px; padding:8px 12px; font:inherit; font-weight:700; font-size:13px; margin-bottom:14px; cursor:pointer;}
+
+/* priority framework cards */
+.emcard{border-left:5px solid var(--bad); border-radius:12px; background:var(--surface); border:1px solid var(--line); border-left-width:5px; border-left-color:var(--bad); padding:14px 16px; box-shadow:var(--shadow);}
+.emcard h4{font-size:15.5px; margin-bottom:4px;}
+.emcard .recog{font-size:13px; color:var(--ink-soft); margin-bottom:8px;}
+.emcard .act{font-size:13.5px; background:var(--bad-soft); color:var(--ink); padding:8px 10px; border-radius:9px;}
+.emcard .act b{color:var(--bad);}
+
+/* reference accordion */
+.acc{border:1px solid var(--line); border-radius:14px; background:var(--surface); overflow:hidden; margin-bottom:10px;}
+.acc > summary{list-style:none; cursor:pointer; padding:14px 16px; font-weight:700; font-size:15px; display:flex; justify-content:space-between; align-items:center; gap:10px;}
+.acc > summary::-webkit-details-marker{display:none;}
+.acc > summary:after{content:"+"; font-size:20px; color:var(--ink-soft); font-weight:400; transition:transform .2s;}
+.acc[open] > summary:after{content:"–";}
+.acc .accbody{padding:0 16px 16px; color:var(--ink-soft); font-size:14px;}
+.acc .accbody table{width:100%; border-collapse:collapse; font-size:13.5px;}
+.acc .accbody th,.acc .accbody td{text-align:left; padding:7px 8px; border-bottom:1px solid var(--line); vertical-align:top;}
+.acc .accbody th{color:var(--ink); font-size:11.5px; text-transform:uppercase; letter-spacing:.04em;}
+.tablewrap{overflow-x:auto;}
+
+/* flashcards */
+.flashgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px;}
+.flash{perspective:1200px; height:150px; cursor:pointer;}
+.flash .inner{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+.flash.flip .inner{transform:rotateY(180deg);}
+.flash .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:14px; padding:14px; border:1px solid var(--line); box-shadow:var(--shadow); display:flex; flex-direction:column; justify-content:center;}
+.flash .front{background:var(--surface);}
+.flash .back{background:var(--surface-2); transform:rotateY(180deg); font-size:13px; color:var(--ink-soft); overflow-y:auto;}
+.flash .front b{font-family:'Fraunces'; font-size:16.5px; font-weight:600;}
+.flash .front span{font-size:11.5px; color:var(--ink-soft); margin-top:4px;}
+
+/* Case simulator */
+.caselist{display:grid; gap:10px; grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+.casepick{border:1px solid var(--line); background:var(--surface); border-radius:13px; padding:13px; cursor:pointer; text-align:left; font:inherit;}
+.casepick:hover{border-color:var(--accent-cur,var(--accent));}
+.casepick .unit{font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; font-weight:700;}
+.casepick .ttl{font-family:'Fraunces'; font-size:15.5px; margin-top:3px;}
+.casepick .done{float:right; font-size:15px;}
+
+.stem{background:var(--surface-2); border-radius:14px; padding:16px 18px; margin-bottom:16px; border:1px solid var(--line);}
+.stem .vit{font-family:'IBM Plex Mono'; font-size:12.5px; color:var(--ink-soft); margin-top:8px;}
+.stepbar{display:flex; gap:6px; margin-bottom:16px;}
+.stepbar i{flex:1; height:5px; border-radius:3px; background:var(--line);}
+.stepbar i.on{background:var(--accent-cur,var(--accent));}
+.qblock{margin-bottom:10px;}
+.qblock h4{font-size:14px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); margin-bottom:10px;}
+.opt{display:flex; gap:10px; align-items:flex-start; border:1px solid var(--line); border-radius:11px; padding:11px 13px; margin-bottom:8px; cursor:pointer; background:var(--surface);}
+.opt:hover{background:var(--surface-2);}
+.opt input{margin-top:3px;}
+.opt.correct{border-color:var(--good); background:var(--good-soft);}
+.opt.incorrect{border-color:var(--bad); background:var(--bad-soft);}
+.opt.dim{opacity:.55;}
+.checkbtn,.nextbtn{
+  font:inherit; font-weight:700; font-size:14px; border:none; border-radius:10px; padding:10px 18px; cursor:pointer;
+  background:var(--accent-cur,var(--accent)); color:#fff; margin-top:4px;
+}
+.checkbtn:disabled{opacity:.4; cursor:not-allowed;}
+.rationale{background:var(--surface-2); border-left:4px solid var(--accent-cur,var(--accent)); border-radius:0 10px 10px 0; padding:10px 13px; font-size:13.5px; margin-top:8px; color:var(--ink-soft);}
+.rationale b{color:var(--ink);}
+.casesummary{text-align:center; padding:26px;}
+.casesummary .big{font-family:'Fraunces'; font-size:34px;}
+
+/* quiz */
+.quizhead{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px;}
+.scorepill{background:var(--surface-2); border-radius:999px; padding:6px 14px; font-family:'IBM Plex Mono'; font-size:12.5px; font-weight:600;}
+
+/* checklist */
+.checkrow{display:flex; gap:11px; align-items:flex-start; padding:11px 4px; border-bottom:1px solid var(--line); font-size:14.5px;}
+.checkrow input{margin-top:3px; width:17px; height:17px; accent-color:var(--good);}
+.checkrow.checked span{text-decoration:line-through; color:var(--ink-soft);}
+
+.pill{display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:3px 9px; border-radius:999px;}
+.pill.onco{background:var(--onco-soft); color:var(--onco);}
+.pill.sensory{background:var(--sensory-soft); color:var(--sensory);}
+.pill.heme{background:var(--heme-soft); color:var(--heme);}
+
+.toast{position:fixed; bottom:22px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--ink); color:var(--bg); padding:11px 20px; border-radius:12px; font-weight:700; font-size:14px; box-shadow:var(--shadow); opacity:0; pointer-events:none; transition:all .3s ease; z-index:80;}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+</style>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="kicker">HCC3 &middot; Exam 2</div>
+      <h1>Sickle, Cell &amp; Sight</h1>
+    </div>
+    <div class="navgroup">
+      <div class="navlabel">Get oriented</div>
+      <button class="navbtn" data-view="priority"><span class="dot" style="background:var(--bad)"></span>Priority Framework</button>
+    </div>
+    <div class="navgroup">
+      <div class="navlabel">Think it through</div>
+      <button class="navbtn" data-view="cases"><span class="dot" style="background:var(--accent)"></span>Case Simulator</button>
+      <button class="navbtn" data-view="quiz"><span class="dot" style="background:var(--good)"></span>NCLEX Quiz</button>
+    </div>
+    <div class="navgroup">
+      <div class="navlabel">Reference library</div>
+      <button class="navbtn" data-view="onco"><span class="dot" style="background:var(--onco)"></span>Cellular Regulation</button>
+      <button class="navbtn" data-view="sensory"><span class="dot" style="background:var(--sensory)"></span>Sensory Perception</button>
+      <button class="navbtn" data-view="heme"><span class="dot" style="background:var(--heme)"></span>Genetics &amp; Clotting</button>
+      <button class="navbtn" data-view="compare"><span class="dot" style="background:var(--warn)"></span>Rapid Compare</button>
+    </div>
+    <div class="navgroup">
+      <div class="navlabel">Before the exam</div>
+      <button class="navbtn" data-view="checklist"><span class="dot"></span>Final Checklist</button>
+    </div>
+    <div class="xpcard">
+      <div class="row"><span class="lvl" id="lvlText">Level 1</span><span class="pts"><span id="xpNum">0</span> XP</span></div>
+      <div class="bar"><i id="xpBar" style="width:0%"></i></div>
+      <div class="streak"><span id="caseCount">0</span>/12 cases &middot; <span id="quizBest">0</span>% best quiz</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <button class="menubtn" id="menubtn">&#9776; Menu</button>
+
+    <!-- PRIORITY FRAMEWORK -->
+    <section class="view" data-view="priority">
+      <div class="pagehead">
+        <div class="eyebrow" style="color:var(--bad)">Learn these first</div>
+        <h2>One-Page Priority Framework</h2>
+        <p class="lede">Twelve situations the test plan expects you to recognize instantly. Unless a question says otherwise: ABCs first, unstable before stable, acute before chronic, least restrictive/safest action.</p>
+      </div>
+      <div class="grid two" id="priorityGrid"></div>
+    </section>
+
+    <!-- CASE SIMULATOR -->
+    <section class="view" data-view="cases">
+      <div class="pagehead">
+        <div class="eyebrow" style="color:var(--accent)">Apply it, don't recite it</div>
+        <h2>Case Simulator</h2>
+        <p class="lede">A patient walks in. You get vitals and findings &mdash; not a diagnosis. Work through what's happening, which drugs the provider will order, what complication could kill this patient, and what you do first.</p>
+      </div>
+      <div id="caseListWrap">
+        <div class="caselist" id="caseList"></div>
+      </div>
+      <div id="caseRunner" hidden></div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="view" data-view="quiz">
+      <div class="pagehead">
+        <div class="eyebrow" style="color:var(--good)">NCLEX-style</div>
+        <h2>Rapid Review Quiz</h2>
+        <p class="lede">Twenty questions pulled from every corner of the learning map, shuffled fresh each attempt.</p>
+      </div>
+      <div id="quizArea"></div>
+    </section>
+
+    <!-- ONCO REFERENCE -->
+    <section class="view" data-view="onco">
+      <div class="pagehead">
+        <div class="eyebrow tag-onco">Unit 1</div>
+        <h2>Cellular Regulation</h2>
+        <p class="lede">Cancer treatment modalities, chemo toxicity, marrow suppression, oncologic emergencies, and cancer-specific care.</p>
+      </div>
+      <div id="oncoAcc"></div>
+      <h3 style="margin-top:26px;">Drug flash cards</h3>
+      <div class="flashgrid" id="oncoFlash"></div>
+    </section>
+
+    <!-- SENSORY REFERENCE -->
+    <section class="view" data-view="sensory">
+      <div class="pagehead">
+        <div class="eyebrow tag-sensory">Unit 2</div>
+        <h2>Sensory Perception</h2>
+        <p class="lede">Eye and ear disorders, perioperative eye/ear care, glaucoma pharmacology, and communicating with hearing-impaired clients.</p>
+      </div>
+      <div id="sensoryAcc"></div>
+      <h3 style="margin-top:26px;">Glaucoma drug flash cards</h3>
+      <div class="flashgrid" id="sensoryFlash"></div>
+    </section>
+
+    <!-- HEME REFERENCE -->
+    <section class="view" data-view="heme">
+      <div class="pagehead">
+        <div class="eyebrow tag-heme">Unit 3</div>
+        <h2>Genetics &amp; Clotting</h2>
+        <p class="lede">Inheritance patterns, sickle cell crises, hemophilia, bleeding vs. clotting risk, labs, and blood products.</p>
+      </div>
+      <div id="hemeAcc"></div>
+      <h3 style="margin-top:26px;">Lab flash cards</h3>
+      <div class="flashgrid" id="hemeFlash"></div>
+    </section>
+
+    <!-- RAPID COMPARE -->
+    <section class="view" data-view="compare">
+      <div class="pagehead">
+        <div class="eyebrow" style="color:var(--warn)">Don't mix these up</div>
+        <h2>Rapid Compare &amp; Do-Not-Miss</h2>
+        <p class="lede">If the stem says this &mdash; think this &mdash; don't miss that.</p>
+      </div>
+      <div class="tablewrap"><table class="card pad" style="border-collapse:collapse; width:100%;" id="compareTable"></table></div>
+    </section>
+
+    <!-- CHECKLIST -->
+    <section class="view" data-view="checklist">
+      <div class="pagehead">
+        <div class="eyebrow">Night before</div>
+        <h2>Final Checklist</h2>
+        <p class="lede">Check off what you can confidently do without notes. Your progress is saved on this device.</p>
+      </div>
+      <div class="card pad" id="checklistWrap"></div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------------- STATE ---------------- */
+var state = { xp:0, casesDone:{}, quizBest:0, checklist:{} };
+try{
+  var saved = JSON.parse(localStorage.getItem('hcc3-study-v1')||'null');
+  if(saved) state = Object.assign(state, saved);
+}catch(e){}
+function persist(){ try{ localStorage.setItem('hcc3-study-v1', JSON.stringify(state)); }catch(e){} }
+
+function addXP(n){
+  state.xp += n; persist(); renderXP();
+  showToast('+'+n+' XP');
+}
+function renderXP(){
+  var lvl = Math.floor(state.xp/100)+1;
+  var into = state.xp%100;
+  document.getElementById('lvlText').textContent = 'Level '+lvl;
+  document.getElementById('xpNum').textContent = state.xp;
+  document.getElementById('xpBar').style.width = into+'%';
+  document.getElementById('caseCount').textContent = Object.keys(state.casesDone).length;
+  document.getElementById('quizBest').textContent = state.quizBest;
+}
+var toastTimer;
+function showToast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 1600);
+}
+
+/* ---------------- NAV ---------------- */
+var views = document.querySelectorAll('.view');
+var navbtns = document.querySelectorAll('.navbtn');
+function go(name){
+  views.forEach(function(v){ v.classList.toggle('active', v.dataset.view===name); });
+  navbtns.forEach(function(b){ b.classList.toggle('active', b.dataset.view===name); });
+  document.getElementById('sidebar').classList.remove('open');
+  window.scrollTo(0,0);
+}
+navbtns.forEach(function(b){ b.addEventListener('click', function(){ go(b.dataset.view); }); });
+document.getElementById('menubtn').addEventListener('click', function(){
+  document.getElementById('sidebar').classList.toggle('open');
+});
+
+/* ---------------- PRIORITY FRAMEWORK DATA ---------------- */
+var priorities = [
+ {u:'onco',t:'Anaphylaxis (chemo/transfusion)',r:'Dyspnea, wheeze, hypotension, hives, facial swelling',a:'STOP the infusion; keep IV access open with NS on new tubing; assess ABCs; activate rapid response; give ordered emergency meds.'},
+ {u:'onco',t:'Febrile neutropenia',r:'Temp ≥38°C/100.4°F with low ANC',a:'Treat as an emergency: notify provider now, obtain ordered cultures, anticipate broad-spectrum IV antibiotics. Do not delay antibiotics for testing.'},
+ {u:'onco',t:'Spinal cord compression',r:'New severe back pain, weakness, sensory loss, bowel/bladder dysfunction',a:'Limit unsafe movement, notify provider immediately, focused neuro assessment; anticipate corticosteroids and urgent radiation/surgery.'},
+ {u:'onco',t:'Superior vena cava syndrome',r:'Facial/neck/upper-extremity edema, dyspnea, venous distention',a:'Elevate HOB, support oxygenation, notify provider urgently; avoid upper-extremity venipuncture when possible.'},
+ {u:'onco',t:'Tumor lysis syndrome',r:'↑K, ↑phosphate, ↓calcium, rising uric acid/creatinine',a:'Cardiac monitoring, aggressive ordered hydration, strict I&O, frequent labs; give uric-acid-lowering therapy as ordered.'},
+ {u:'sensory',t:'Retinal detachment',r:'Flashes, floaters, curtain/veil, sudden painless visual loss',a:'Protect eye, restrict activity as directed, notify ophthalmology immediately — time sensitive.'},
+ {u:'sensory',t:'Acute angle-closure glaucoma',r:'Severe eye pain, halos, headache, nausea/vomiting, fixed mid-dilated pupil',a:'Emergency ophthalmic evaluation and rapid pressure-lowering therapy; do NOT give mydriatic/anticholinergic drugs unless ordered.'},
+ {u:'heme',t:'Sickle cell acute chest syndrome',r:'Chest pain, fever, cough, hypoxemia, new infiltrate',a:'Oxygen, rapid evaluation, analgesia, cautious IV fluids; anticipate antibiotics and transfusion per severity.'},
+ {u:'heme',t:'Hemophilia head injury',r:'Headache, confusion, vomiting, neuro change — even after minor trauma',a:'Treat as intracranial bleeding until proven otherwise; give prescribed factor promptly and get emergency evaluation.'},
+ {u:'onco',t:'Chest tube disconnection',r:'Tubing separates from drainage system',a:'Place distal tube end in sterile water temporarily, obtain a new drainage system, assess respiratory status.'},
+ {u:'onco',t:'Chest tube pulled out',r:'Tube exits the insertion site',a:'Cover with a sterile occlusive dressing taped on three sides, assess ABCs, call rapid response/provider.'},
+ {u:'sensory',t:'CBI obstruction after TURP',r:'Bladder spasms, ↓output, suprapubic distention, clots',a:'Check tubing for kinks; maintain ordered irrigation; notify provider if patency isn\'t restored. True UO = drainage − irrigant.'}
+];
+var unitColor = { onco:'--onco', sensory:'--sensory', heme:'--heme' };
+var unitLabel = { onco:'Cellular Regulation', sensory:'Sensory Perception', heme:'Genetics & Clotting' };
+(function(){
+  var wrap = document.getElementById('priorityGrid');
+  priorities.forEach(function(p){
+    var el = document.createElement('div');
+    el.className='emcard';
+    el.innerHTML = '<span class="pill '+p.u+'" style="margin-bottom:8px;">'+unitLabel[p.u]+'</span>'+
+      '<h4>'+p.t+'</h4><div class="recog">'+p.r+'</div>'+
+      '<div class="act"><b>First action —</b> '+p.a+'</div>';
+    wrap.appendChild(el);
+  });
+})();
+
+/* ---------------- REFERENCE ACCORDIONS ---------------- */
+function accordion(container, sections){
+  sections.forEach(function(s,i){
+    var d = document.createElement('details');
+    d.className='acc'; if(i===0) d.open = true;
+    d.innerHTML = '<summary>'+s.title+'</summary><div class="accbody">'+s.html+'</div>';
+    container.appendChild(d);
+  });
+}
+
+accordion(document.getElementById('oncoAcc'), [
+ {title:'Cancer treatment modalities', html:
+  '<div class="tablewrap"><table><tr><th>Modality</th><th>Purpose</th><th>Nursing focus</th></tr>'+
+  '<tr><td>Surgery</td><td>Diagnosis, staging, cure, debulking, palliation</td><td>Pre/post-op care, drains, wound healing, pain, pulmonary hygiene, mobility, body image</td></tr>'+
+  '<tr><td>Chemotherapy</td><td>Systemic drugs target rapidly dividing cells</td><td>Baseline CBC/CMP, vesicant precautions, infection/bleeding prevention, reproductive safety</td></tr>'+
+  '<tr><td>Radiation</td><td>Local/regional ionizing damage to tumor DNA</td><td>Site-specific skin care, fatigue, marrow suppression if large field, radiation-safety rules</td></tr>'+
+  '<tr><td>Targeted therapy</td><td>Blocks a tumor-specific pathway/receptor</td><td>Infusion reactions, rash, diarrhea, HTN, cardiac/hepatic effects</td></tr>'+
+  '<tr><td>Immunotherapy</td><td>Activates immune response vs. cancer</td><td>Immune-related inflammation of lung/bowel/liver/endocrine/skin — report early</td></tr>'+
+  '<tr><td>Hormonal therapy</td><td>Blocks hormones driving selected breast/prostate cancers</td><td>Adherence, hot flashes, thrombotic/metabolic drug-specific risks</td></tr>'+
+  '</table></div>'},
+ {title:'Chemo drug classes & major toxicity', html:
+  '<div class="tablewrap"><table><tr><th>Class / example</th><th>Major toxicity</th><th>Nursing point</th></tr>'+
+  '<tr><td>Alkylating — cyclophosphamide</td><td>Myelosuppression; hemorrhagic cystitis</td><td>Hydrate, monitor for hematuria; mesna may protect bladder</td></tr>'+
+  '<tr><td>Antimetabolite — methotrexate, 5-FU</td><td>Myelosuppression, mucositis, hepatotoxicity</td><td>Leucovorin rescue may follow high-dose methotrexate</td></tr>'+
+  '<tr><td>Antitumor antibiotic — doxorubicin</td><td>Cardiomyopathy; severe extravasation injury</td><td>Baseline/periodic cardiac function; lifetime dose limit; red-orange urine is harmless</td></tr>'+
+  '<tr><td>Plant alkaloid — vincristine</td><td>Peripheral/autonomic neuropathy, ileus</td><td><b>Fatal if given intrathecally</b></td></tr>'+
+  '<tr><td>Taxane — paclitaxel</td><td>Neuropathy, myelosuppression, hypersensitivity</td><td>Premedication often required</td></tr>'+
+  '<tr><td>Platinum — cisplatin</td><td>Nephrotoxicity, ototoxicity, severe nausea</td><td>Hydration; monitor Cr, Mg, K, hearing</td></tr>'+
+  '<tr><td>Topoisomerase inhibitor — irinotecan</td><td>Myelosuppression; diarrhea</td><td>Early vs. delayed diarrhea managed differently</td></tr>'+
+  '<tr><td>Monoclonal Ab — trastuzumab</td><td>Infusion reaction; cardiotoxicity</td><td>Close first-infusion + cardiac monitoring</td></tr>'+
+  '<tr><td>Hormonal — tamoxifen</td><td>VTE, endometrial cancer risk</td><td>Report leg swelling, chest pain, dyspnea, abnormal bleeding</td></tr>'+
+  '<tr><td>Immune checkpoint inhibitors</td><td>Pneumonitis, colitis, hepatitis, endocrinopathy</td><td>New cough/diarrhea/jaundice/fatigue = prompt evaluation</td></tr>'+
+  '</table></div><p><b>Before chemo:</b> verify consent, regimen, dose, labs, venous access, premeds, independent double-check.</p>'},
+ {title:'Extravasation vs. hypersensitivity', html:
+  '<p><b>Extravasation</b> — burning, swelling, erythema, slowed infusion, absent blood return. <b>STOP</b> the drug, leave catheter for aspiration/antidote, notify oncology, follow warm/cold protocol. Do not flush.</p>'+
+  '<p><b>Hypersensitivity</b> — flushing, itching, hives, wheeze, chest tightness, hypotension. STOP infusion, keep access with NS/new tubing, ABCs, call for help, give ordered O2/epinephrine/antihistamine/steroid.</p>'},
+ {title:'Common treatment effects', html:
+  '<div class="tablewrap"><table><tr><th>Problem</th><th>Care</th></tr>'+
+  '<tr><td>CINV</td><td>Antiemetics before/on schedule; small frequent bland meals; escalate inability to keep fluids down</td></tr>'+
+  '<tr><td>Stomatitis/mucositis</td><td>Soft toothbrush, saline/bicarb rinses; avoid alcohol mouthwash, tobacco, spicy/hard foods</td></tr>'+
+  '<tr><td>Alopecia</td><td>Prepare before loss; gentle scalp care; usually temporary</td></tr>'+
+  '<tr><td>Anorexia/cachexia</td><td>Small frequent high-calorie/protein meals; control pain/nausea before meals</td></tr>'+
+  '<tr><td>Fatigue</td><td>Energy conservation, cluster care, investigate reversible causes</td></tr>'+
+  '<tr><td>Peripheral neuropathy</td><td>Fall/burn prevention, inspect feet, report progression for dose adjustment</td></tr>'+
+  '</table></div>'},
+ {title:'Bone marrow suppression', html:
+  '<div class="tablewrap"><table><tr><th>Condition</th><th>Watch</th><th>Precautions</th></tr>'+
+  '<tr><td>Neutropenia</td><td>ANC — fever may be the ONLY sign</td><td>Hand hygiene, no rectal temps/suppositories, avoid crowds; fever ≥38°C = immediate contact</td></tr>'+
+  '<tr><td>Thrombocytopenia</td><td>Platelets, petechiae, bleeding</td><td>Soft toothbrush/electric razor, no IM/rectal/NSAIDs, prolonged pressure after sticks</td></tr>'+
+  '<tr><td>Anemia</td><td>H&H, pallor, dyspnea, tachycardia</td><td>Rest/activity balance, fall precautions, transfuse per order</td></tr>'+
+  '</table></div><p><b>Exam priority:</b> ANC &lt;500 = profound infection risk. Platelets &lt;20,000 = high spontaneous bleeding risk.</p>'},
+ {title:'Oncologic emergencies', html:
+  '<div class="tablewrap"><table><tr><th>Emergency</th><th>Key findings</th><th>Management</th></tr>'+
+  '<tr><td>Tumor lysis syndrome</td><td>↑K ↑phosphate ↑uric acid ↓Ca, AKI</td><td>Hydration + uric-acid therapy, cardiac monitoring, strict I&O</td></tr>'+
+  '<tr><td>Spinal cord compression</td><td>New back pain, weakness, bowel/bladder change</td><td>Urgent neuro/imaging, corticosteroids, radiation/surgery</td></tr>'+
+  '<tr><td>SVC syndrome</td><td>Facial/neck/arm edema, distended chest veins</td><td>High Fowler, O2, steroids/radiation/stent</td></tr>'+
+  '<tr><td>Hypercalcemia of malignancy</td><td>Weakness, confusion, constipation, polyuria</td><td>IV isotonic fluids, ECG/renal monitoring, bisphosphonate</td></tr>'+
+  '<tr><td>SIADH</td><td>Low Na, concentrated urine, seizure risk</td><td>Fluid restriction, neuro/seizure precautions, correct Na carefully</td></tr>'+
+  '<tr><td>DIC</td><td>Diffuse bleeding + microthrombi, ↓plt/fibrinogen</td><td>Treat cause, bleeding precautions, blood products</td></tr>'+
+  '<tr><td>Sepsis/febrile neutropenia</td><td>Fever/hypothermia, tachycardia, hypotension</td><td>Cultures, rapid antibiotics, IV fluids, O2</td></tr>'+
+  '</table></div>'},
+ {title:'Tubes, drains & parenteral nutrition', html:
+  '<p><b>Chest tube:</b> system upright/below chest, no kinks. Gentle tidaling expected; continuous bubbling = air leak. Never routinely clamp/strip/milk. Report sudden bright-red output or absent drainage with distress.</p>'+
+  '<p><b>JP drain:</b> compress bulb before capping (closed suction), measure/document, report foul odor/pus/sudden increase/lost suction.</p>'+
+  '<p><b>PN:</b> central = hypertonic, central line required. Monitor glucose, electrolytes (Mg, phosphate), triglycerides, refeeding syndrome. Never abruptly stop high-dextrose infusion — risk of hypoglycemia.</p>'},
+ {title:'Cancer-specific care', html:
+  '<p><b>Breast/mastectomy:</b> elevate affected arm, avoid BP/venipuncture/injury on that side, hand squeezing then ROM exercises, maintain drain suction.</p>'+
+  '<p><b>Colorectal/ostomy:</b> healthy stoma is moist, shiny, pink-to-beefy red. Dusky/pale/black/cool/dry = abnormal. Empty pouch at ⅓–½ full.</p>'+
+  '<p><b>Lung/chest surgery:</b> airway/breathing first, pain control for coughing/IS, early mobility, DVT prevention. After pneumonectomy, avoid nonoperative-side positioning unless ordered.</p>'+
+  '<p><b>ALL/BMT:</b> infection prevention is central; avoid live vaccines until cleared. GVHD = skin rash, profuse diarrhea, jaundice — report immediately.</p>'}
+]);
+
+accordion(document.getElementById('sensoryAcc'), [
+ {title:'Vision disorder comparison', html:
+  '<div class="tablewrap"><table><tr><th>Disorder</th><th>Classic findings</th><th>Focus</th></tr>'+
+  '<tr><td>Cataract</td><td>Painless progressive cloudy vision, glare/halos, absent red reflex</td><td>Surgical lens replacement; protect eye post-op</td></tr>'+
+  '<tr><td>Retinal detachment</td><td>Sudden painless flashes/floaters, curtain/veil</td><td>Emergency repair; maintain prescribed head position with gas bubble</td></tr>'+
+  '<tr><td>Open-angle glaucoma</td><td>Gradual painless peripheral loss, ↑IOP</td><td>Lifelong pressure-lowering drops, adherence</td></tr>'+
+  '<tr><td>Angle-closure glaucoma</td><td>Sudden severe pain, halos, red eye, fixed mid-dilated pupil</td><td>Emergency; avoid dilating drugs unless directed</td></tr>'+
+  '</table></div>'},
+ {title:'Eye surgery nursing care', html:
+  '<p><b>Before:</b> baseline vision, allergies, ability to self-instill drops.</p>'+
+  '<p><b>After:</b> protect with shield, prevent coughing/vomiting/straining; severe pain or sudden vision loss is NOT expected.</p>'+
+  '<p><b>At home:</b> no rubbing, shield during sleep, avoid bending/lifting/straining until cleared.</p>'+
+  '<p><b>Report urgently:</b> severe/increasing pain, sudden visual loss, flashes/floaters/curtain, purulent drainage, fever, trauma.</p>'+
+  '<p><b>Gas bubble:</b> exact prescribed position; avoid air travel/altitude; nitrous oxide can dangerously expand it — flag anesthesia.</p>'},
+ {title:'Correct eye drop technique', html:
+  '<p>Hand hygiene → verify med/eye/dose → head tilted back, look up → pull lower lid to form pocket → instill into conjunctival sac (never on cornea) → close gently, no rubbing → apply pressure at inner canthus 1–2 min for systemic-effect drugs → wait 5+ min between different drops → drops before ointment.</p>'},
+ {title:'Ear conditions & surgery', html:
+  '<p><b>Acute otitis media:</b> pain, fever, bulging erythematous TM. Feed infants upright, avoid propped bottles.</p>'+
+  '<p><b>Ruptured TM:</b> sudden relief then drainage; keep ear dry, no drops unless approved.</p>'+
+  '<p><b>Mastoiditis (complication):</b> postauricular pain/redness/protruding ear — urgent evaluation.</p>'+
+  '<p><b>After ear surgery:</b> avoid nose blowing, forceful coughing, heavy lifting, swimming, air travel. Expected: mild dizziness, temporary hearing loss. Abnormal: severe vertigo, facial weakness, CSF-like drainage, sudden hearing loss.</p>'+
+  '<p><b>Irrigation:</b> never with suspected perforation/tubes/severe pain. Adults: pinna up & back. Body-temperature solution only — cold causes vertigo.</p>'},
+ {title:'Communication & Ménière disease', html:
+  '<p><b>Hearing loss communication:</b> get attention first, face at eye level, reduce noise, speak clearly (not shouting), rephrase rather than repeat, confirm with teach-back.</p>'+
+  '<p><b>Ménière disease — acute:</b> bedrest, quiet dark room, side rails, vestibular suppressant/antiemetic. <b>Long-term:</b> low-sodium diet, avoid caffeine/alcohol/nicotine, move slowly, avoid driving when symptomatic.</p>'+
+  '<p><b>Ototoxic drugs:</b> aminoglycosides, cisplatin, high-dose loop diuretics, salicylates — report tinnitus/hearing change.</p>'}
+]);
+
+accordion(document.getElementById('hemeAcc'), [
+ {title:'Genetic inheritance essentials', html:
+  '<div class="tablewrap"><table><tr><th>Pattern</th><th>Meaning</th><th>Example</th></tr>'+
+  '<tr><td>Autosomal recessive</td><td>Needs two altered alleles; parents may be unaffected carriers</td><td>Sickle cell — 2 trait parents: 25% disease / 50% trait / 25% unaffected</td></tr>'+
+  '<tr><td>X-linked recessive</td><td>Usually affects males; no father-to-son transmission</td><td>Hemophilia — carrier mother × unaffected father: 50% of sons affected, 50% of daughters carriers</td></tr>'+
+  '<tr><td>Autosomal dominant</td><td>One altered allele causes disease</td><td>Affected parent: 50% chance per child</td></tr>'+
+  '</table></div><p>Genetic counseling is non-directive — never tell a client whether to conceive.</p>'},
+ {title:'Sickle cell disease deep dive', html:
+  '<p><b>Pathophysiology:</b> autosomal recessive beta-globin disorder. Deoxygenated HbS polymerizes → sickling, hemolysis, vaso-occlusion, ischemia.</p>'+
+  '<p><b>Triggers:</b> dehydration, hypoxia, infection, acidosis, cold, extreme exertion, stress, high altitude.</p>'+
+  '<p><b>VOC:</b> severe ischemic pain — rapid opioids, hydration to euvolemia, warmth, incentive spirometry. O2 only if hypoxemic.</p>'+
+  '<p><b>Acute chest syndrome:</b> infiltrate + fever/respiratory symptoms — oxygen, antibiotics, analgesia, possible transfusion.</p>'+
+  '<p><b>Splenic sequestration:</b> sudden anemia + shock, especially in children — emergency fluids/blood.</p>'+
+  '<p><b>Stroke:</b> new weakness/facial droop/speech change — emergency + exchange transfusion pathway.</p>'+
+  '<p><b>Priapism:</b> painful erection &gt;4 hrs — hydration/analgesia + emergency urology.</p>'+
+  '<p><b>Hydroxyurea:</b> ↑fetal Hgb, reduces crises. Major risk = marrow suppression. Never double a missed dose. Reliable contraception required.</p>'},
+ {title:'Hemophilia A vs. B', html:
+  '<div class="tablewrap"><table><tr><th>Feature</th><th>Hemophilia A</th><th>Hemophilia B</th></tr>'+
+  '<tr><td>Deficiency</td><td>Factor VIII</td><td>Factor IX</td></tr>'+
+  '<tr><td>Inheritance</td><td>X-linked recessive</td><td>X-linked recessive</td></tr>'+
+  '<tr><td>Bleeding pattern</td><td>Deep tissue/joints/muscles</td><td>Same</td></tr>'+
+  '<tr><td>Labs</td><td>↑aPTT, normal PT/platelets</td><td>Same</td></tr>'+
+  '<tr><td>Treatment</td><td>Recombinant factor VIII; desmopressin (mild)</td><td>Recombinant factor IX</td></tr>'+
+  '</table></div><p><b>Hemarthrosis:</b> warm swollen flexed joint → give factor promptly, rest/protect, cold packs, elevate — never heat/massage during active bleed.</p>'},
+ {title:'Bleeding vs. clotting risk', html:
+  '<div class="tablewrap"><table><tr><th>Predisposes to bleeding</th><th>Predisposes to thrombosis</th></tr>'+
+  '<tr><td>Hemophilia/vWD, thrombocytopenia, liver disease, vitamin K deficiency, anticoagulants, DIC</td><td>Immobility, surgery, cancer, pregnancy, estrogen therapy, obesity, smoking, prior VTE, CVC, dehydration</td></tr>'+
+  '</table></div><p><b>Bleeding signs:</b> petechiae, mucosal bleeding, hemarthrosis, hematuria/melena. <b>DVT:</b> unilateral swelling/warmth/pain. <b>PE:</b> sudden dyspnea, pleuritic pain, hypoxemia.</p>'},
+ {title:'Nursing care for active bleeding', html:
+  '<p>ABCs → mental status/vitals/site/perfusion → direct firm pressure (don\'t remove saturated dressings, reinforce) → IV access, labs, type & crossmatch → factor/reversal/blood products as ordered.</p>'+
+  '<p>For hemophilia: factor replacement should NOT wait for imaging when a serious bleed is suspected. Avoid IM injections, aspirin, NSAIDs unless specialist-prescribed.</p>'},
+ {title:'Blood product safety', html:
+  '<div class="tablewrap"><table><tr><th>Product</th><th>Purpose</th><th>Key point</th></tr>'+
+  '<tr><td>Packed RBCs</td><td>↑O2 capacity</td><td>Blood tubing/filter + compatible NS only</td></tr>'+
+  '<tr><td>Platelets</td><td>Treat/prevent bleeding from thrombocytopenia</td><td>ABO matching preferred</td></tr>'+
+  '<tr><td>FFP</td><td>Multi-factor replacement</td><td>Requires thawing; not for volume expansion alone</td></tr>'+
+  '<tr><td>Cryoprecipitate</td><td>Fibrinogen + factor VIII/XIII/vWF</td><td>Used for low fibrinogen</td></tr>'+
+  '<tr><td>Factor concentrate</td><td>Specific hemophilia replacement</td><td>Preferred rapid targeted therapy</td></tr>'+
+  '</table></div><p><b>Reaction protocol:</b> STOP transfusion, keep vein open with NS/new tubing, notify provider/blood bank, recheck identity, send bag+samples. Never add meds to blood tubing.</p>'}
+]);
+
+/* ---------------- FLASH CARDS ---------------- */
+function flashcards(container, cards){
+  cards.forEach(function(c){
+    var el = document.createElement('div');
+    el.className='flash';
+    el.innerHTML = '<div class="inner">'+
+      '<div class="face front"><b>'+c.f+'</b><span>tap to reveal</span></div>'+
+      '<div class="face back">'+c.b+'</div></div>';
+    el.addEventListener('click', function(){ el.classList.toggle('flip'); });
+    container.appendChild(el);
+  });
+}
+flashcards(document.getElementById('oncoFlash'), [
+ {f:'Ondansetron', b:'5-HT3 antagonist for acute CINV. Watch QT prolongation, headache, constipation. Given before chemo.'},
+ {f:'Dexamethasone', b:'Antiemetic adjunct. Watch hyperglycemia, infection risk, mood/sleep change. Taper if prolonged.'},
+ {f:'Metoclopramide', b:'For nausea/gastroparesis. Risk of extrapyramidal symptoms & tardive dyskinesia — report abnormal movements.'},
+ {f:'Filgrastim', b:'Stimulates neutrophil production. Causes bone pain. Monitor CBC/ANC.'},
+ {f:'Allopurinol / Rasburicase', b:'TLS prevention/treatment. Allopurinol blocks new uric acid; rasburicase rapidly lowers it. Check G6PD before rasburicase.'},
+ {f:'Vincristine', b:'Plant alkaloid. Peripheral neuropathy, constipation/ileus. FATAL if given intrathecally.'},
+ {f:'Doxorubicin', b:'Antitumor antibiotic. Cardiomyopathy risk, lifetime dose limit. Red-orange urine is harmless.'},
+ {f:'Cisplatin', b:'Platinum compound. Nephrotoxic, ototoxic. Hydrate; monitor creatinine, Mg/K, hearing.'}
+]);
+flashcards(document.getElementById('sensoryFlash'), [
+ {f:'Latanoprost', b:'Prostaglandin analog. ↑outflow. Causes iris/eyelash pigmentation — often permanent. Usually nightly.'},
+ {f:'Timolol', b:'Beta blocker. ↓aqueous production. Check pulse/BP; avoid in asthma/COPD/heart block. Punctal occlusion reduces systemic absorption.'},
+ {f:'Brimonidine', b:'Alpha-2 agonist. Dry mouth, fatigue, hypotension. CNS depression risk in young children.'},
+ {f:'Acetazolamide', b:'Carbonic anhydrase inhibitor. Can cause paresthesia, hypokalemia. Ask about sulfonamide allergy.'},
+ {f:'Pilocarpine', b:'Cholinergic — contracts pupil, ↑outflow. Fall risk in dim light; rare retinal detachment warning symptoms.'},
+ {f:'Mydriatics/anticholinergics', b:'Dilate pupil — can narrow the angle. Avoid in angle-closure risk unless ophthalmology orders it.'}
+]);
+flashcards(document.getElementById('hemeFlash'), [
+ {f:'PT / INR', b:'Extrinsic/common pathway. Monitors warfarin. Prolonged in vitamin K deficiency/liver disease.'},
+ {f:'aPTT', b:'Intrinsic/common pathway. Prolonged in hemophilia; monitors unfractionated heparin.'},
+ {f:'Fibrinogen', b:'Substrate for clot formation. Low in DIC.'},
+ {f:'D-dimer', b:'Fibrin breakdown product. Elevated with clot formation/breakdown — nonspecific.'},
+ {f:'Reticulocyte count', b:'Marrow RBC response. High = hemolysis/recovery. Low = aplastic crisis.'},
+ {f:'Platelet count', b:'Number of platelets. Function may still be impaired at a normal count (aspirin, uremia).'}
+]);
+
+/* ---------------- RAPID COMPARE TABLE ---------------- */
+var compareRows = [
+ ['Painless cloudy vision + glare','Cataract','Post-op: avoid increased IOP'],
+ ['Painless flashes/floaters/curtain','Retinal detachment','Urgent ophthalmology; exact positioning after repair'],
+ ['Gradual peripheral vision loss','Open-angle glaucoma','Lifelong drops, usually painless'],
+ ['Painful red eye, halos, nausea','Angle-closure glaucoma','Emergency — mydriatics/anticholinergics can worsen'],
+ ['Deep joint bleeding','Hemophilia','Factor first for serious bleed — not heat/massage'],
+ ['Pain crisis, normal O2 sat','Sickle cell VOC','Rapid analgesia + hydration; O2 only if hypoxemic'],
+ ['Chest pain, fever, low O2 in SCD','Acute chest syndrome','Emergency — O2, antibiotics, incentive spirometry'],
+ ['Fever in neutropenia','Febrile neutropenia','Cultures + rapid broad-spectrum antibiotics — don\'t delay'],
+ ['Continuous bubbling in water seal','Air leak','Trace the system; do not clamp routinely'],
+ ['No CBI output + bladder spasm','Obstruction/clot','Check kinks/patency; true UO subtracts irrigant'],
+ ['Severe back pain + weakness (cancer)','Cord compression','Urgent neuro assessment and treatment'],
+ ['Face/neck swelling in lung cancer','SVC syndrome','High Fowler, oxygen, urgent notification'],
+ ['↑K, ↑phosphate, ↓Ca after chemo','Tumor lysis syndrome','Cardiac/renal emergency'],
+ ['Chemo site burning/swelling','Extravasation','Stop, leave catheter, aspirate/antidote — do not flush']
+];
+(function(){
+  var t = document.getElementById('compareTable');
+  var html = '<tr><th style="text-align:left;padding:8px;border-bottom:2px solid var(--line);">If the stem says</th><th style="text-align:left;padding:8px;border-bottom:2px solid var(--line);">Think</th><th style="text-align:left;padding:8px;border-bottom:2px solid var(--line);">Don\'t miss</th></tr>';
+  compareRows.forEach(function(r){
+    html += '<tr><td style="padding:8px;border-bottom:1px solid var(--line);">'+r[0]+'</td><td style="padding:8px;border-bottom:1px solid var(--line);font-weight:700;">'+r[1]+'</td><td style="padding:8px;border-bottom:1px solid var(--line);color:var(--ink-soft);">'+r[2]+'</td></tr>';
+  });
+  t.innerHTML = html;
+})();
+
+/* ---------------- FINAL CHECKLIST ---------------- */
+var checklistItems = [
+ 'I can distinguish cataract, retinal detachment, open-angle glaucoma, and angle-closure glaucoma from the symptom pattern.',
+ 'I can state the first action for extravasation, transfusion reaction, febrile neutropenia, chest-tube disconnection, and a dislodged radiation source.',
+ 'I can calculate true urine output during CBI and recognize TURP syndrome.',
+ 'I can compare sealed vs. unsealed internal radiation and external-beam care.',
+ 'I can recognize tumor lysis, cord compression, SVC syndrome, hypercalcemia, SIADH, and DIC.',
+ 'I know sickle cell inheritance, crisis priorities, acute chest syndrome, hydroxyurea teaching, and genetic counseling principles.',
+ 'I know hemophilia A vs. B, hemarthrosis care, expected labs, bleeding precautions, factor VIII, and blood-product safety.',
+ 'I reviewed every medication in the learning map and can identify its highest-risk adverse effect.'
+];
+(function(){
+  var wrap = document.getElementById('checklistWrap');
+  checklistItems.forEach(function(item,i){
+    var id = 'chk'+i;
+    var row = document.createElement('label');
+    row.className='checkrow'+(state.checklist[id]?' checked':'');
+    row.htmlFor = id;
+    row.innerHTML = '<input type="checkbox" id="'+id+'" '+(state.checklist[id]?'checked':'')+'><span>'+item+'</span>';
+    row.querySelector('input').addEventListener('change', function(e){
+      state.checklist[id] = e.target.checked;
+      row.classList.toggle('checked', e.target.checked);
+      persist();
+      if(e.target.checked) addXP(5);
+    });
+    wrap.appendChild(row);
+  });
+})();
+
+/* ================= CASE SIMULATOR ================= */
+var cases = [
+{id:'c1', u:'onco', title:'Burning at the IV site', stem:'A client receiving vincristine through a peripheral IV reports sudden burning and swelling at the insertion site. The infusion has slowed, there is no blood return, and the skin around the site is reddened.',
+ vit:'HR 88 · BP 122/78 · RR 16 · SpO2 98% RA',
+ steps:[
+  {q:'What is happening?', opts:[
+    {t:'Extravasation of a vesicant drug', c:true, r:'Burning, swelling, slowed infusion, and absent blood return at a vesicant site are the classic extravasation triad — the drug is leaking into surrounding tissue, not the vein.'},
+    {t:'Expected infusion-related discomfort', c:false, r:'Mild discomfort can occur, but absent blood return and slowing infusion mean the line is no longer intravascular — this is not benign.'},
+    {t:'Anaphylaxis to the chemotherapy', c:false, r:'Anaphylaxis presents with systemic signs — wheeze, hypotension, facial swelling — not isolated site burning with no blood return.'},
+    {t:'Simple phlebitis', c:false, r:'Phlebitis causes warmth/redness along the vein but doesn\'t typically stop blood return this abruptly during a vesicant infusion.'}
+  ]},
+  {q:'Priority action right now?', opts:[
+    {t:'Flush the line to restore patency', c:false, r:'Flushing pushes more vesicant into the tissue — never flush a suspected extravasation.'},
+    {t:'Stop the infusion, leave the catheter in place, and attempt to aspirate residual drug', c:true, r:'Stopping first prevents further tissue injury; leaving the catheter allows aspiration of remaining drug and possible antidote administration before discontinuing.'},
+    {t:'Remove the catheter immediately and apply a warm compress', c:false, r:'Removing the catheter first loses the chance to aspirate drug or instill an antidote through it.'},
+    {t:'Increase the rate to finish the dose faster', c:false, r:'This drives more vesicant into tissue and worsens injury.'}
+  ]},
+  {q:'Which complications must you watch for? (select all that apply)', multi:true, opts:[
+    {t:'Tissue necrosis and ulceration', c:true, r:'Vesicants cause direct tissue destruction when they escape the vein.'},
+    {t:'Permanent nerve or tendon damage', c:true, r:'Deep extravasation injury can involve underlying structures, especially with delayed recognition.'},
+    {t:'Immediate hypoglycemia', c:false, r:'Not a recognized consequence of extravasation.'},
+    {t:'Loss of function if near a joint', c:true, r:'Extravasation near a joint can scar and limit range of motion long-term.'}
+  ]},
+  {q:'What comes next in your management?', opts:[
+    {t:'Follow the agent-specific warm or cold compress protocol and notify the oncology team', c:true, r:'Vincristine (a vesicant) has a specific compress and antidote protocol — cold for some agents, warm for others — and the oncology team directs further care.'},
+    {t:'Apply ice for 24 hours regardless of drug', c:false, r:'The compress type is agent-specific — using the wrong one can worsen injury.'},
+    {t:'Discharge the client and follow up in one week', c:false, r:'This requires active, immediate management, not deferred follow-up.'}
+  ]}
+ ]},
+{id:'c2', u:'onco', title:'Fever after chemo', stem:'A client one week post-chemotherapy for lymphoma calls the clinic reporting a temperature of 100.6°F (38.1°C). Labs from yesterday show an ANC of 300 cells/mm³.',
+ vit:'Temp 100.6°F · ANC 300 · HR 102 · BP 108/64',
+ steps:[
+  {q:'How should you interpret this fever?', opts:[
+   {t:'A medical emergency — febrile neutropenia', c:true, r:'Any fever ≥38°C/100.4°F with a low ANC is treated as a life-threatening emergency because the client has almost no ability to fight infection.'},
+   {t:'A normal, expected post-chemo symptom to monitor at home', c:false, r:'With an ANC this low, fever is never "watch and wait" — it requires immediate evaluation.'},
+   {t:'Likely a viral syndrome that will resolve on its own', c:false, r:'You cannot assume a benign cause; the profound neutropenia makes any fever a red flag regardless of suspected source.'}
+  ]},
+  {q:'What treatment should you anticipate?', opts:[
+   {t:'Broad-spectrum IV antibiotics started promptly after cultures, without waiting for results', c:true, r:'Empiric broad-spectrum antibiotics are started immediately — sepsis can progress within hours in a neutropenic client.'},
+   {t:'Oral antibiotics once fever persists 48 hours', c:false, r:'Waiting risks rapid deterioration to septic shock.'},
+   {t:'Antipyretics only, then reassess in the morning', c:false, r:'This delays antibiotic therapy — masking fever also removes your main warning sign.'}
+  ]},
+  {q:'What complications are you most worried about? (select all)', multi:true, opts:[
+   {t:'Sepsis / septic shock', c:true, r:'Neutropenic clients can decompensate rapidly from an unchecked infection.'},
+   {t:'DIC secondary to overwhelming infection', c:true, r:'Severe sepsis can trigger consumptive coagulopathy.'},
+   {t:'Hyperglycemia as the primary threat', c:false, r:'Not the priority concern in this scenario.'}
+  ]},
+  {q:'Best immediate nursing action?', opts:[
+   {t:'Notify the provider now, obtain ordered blood cultures, and do not delay antibiotics for test completion', c:true, r:'Time-to-antibiotic is directly tied to survival in febrile neutropenia — cultures are drawn but never delay treatment.'},
+   {t:'Tell the client to take acetaminophen and call back if it worsens', c:false, r:'This is unsafe — the client needs to be seen and treated urgently.'}
+  ]}
+ ]},
+{id:'c3', u:'onco', title:'Cramping and cardiac changes after induction chemo', stem:'A client with newly diagnosed acute leukemia, three days into induction chemotherapy, develops muscle cramps and new dysrhythmia on telemetry. Labs: K 6.4, phosphate elevated, calcium low, uric acid rising.',
+ vit:'K 6.4 mEq/L · Ca 6.9 mg/dL · Uric acid rising · Telemetry: new PVCs',
+ steps:[
+  {q:'What is this client experiencing?', opts:[
+   {t:'Tumor lysis syndrome', c:true, r:'Rapid destruction of leukemia cells releases intracellular contents — potassium and phosphate rise, calcium falls, and uric acid climbs, exactly this pattern.'},
+   {t:'Simple electrolyte imbalance from poor oral intake', c:false, r:'The specific combination — high K, high phosphate, low Ca, high uric acid — right after induction chemo is the TLS signature, not incidental dehydration.'},
+   {t:'Digoxin toxicity', c:false, r:'Nothing here points to digoxin; the lab pattern is classic cell-lysis, not a drug toxicity.'}
+  ]},
+  {q:'Which therapies should you anticipate?', multi:true, opts:[
+   {t:'Aggressive IV hydration', c:true, r:'Hydration promotes renal clearance of potassium, phosphate, and uric acid and protects the kidneys.'},
+   {t:'Rasburicase or allopurinol (checking G6PD status first for rasburicase)', c:true, r:'These lower uric acid; rasburicase can cause hemolysis in G6PD-deficient clients, so status must be checked first.'},
+   {t:'Immediate potassium supplementation', c:false, r:'This client is hyperkalemic — giving more potassium would be dangerous.'},
+   {t:'Cardiac monitoring', c:true, r:'Hyperkalemia and hypocalcemia both threaten cardiac conduction — continuous monitoring is essential.'}
+  ]},
+  {q:'What complication is the most immediate threat?', opts:[
+   {t:'Life-threatening dysrhythmia or cardiac arrest from hyperkalemia', c:true, r:'Hyperkalemia this severe, combined with hypocalcemia, can precipitate fatal arrhythmias — this is the most time-critical threat.'},
+   {t:'Mild nausea', c:false, r:'Not the priority concern given the electrolyte and cardiac picture.'},
+   {t:'Hair loss', c:false, r:'An expected but non-emergent chemo effect, irrelevant here.'}
+  ]},
+  {q:'Priority nursing action?', opts:[
+   {t:'Maintain continuous cardiac monitoring, strict I&O, and frequent lab draws while treatment is given', c:true, r:'Close monitoring catches worsening dysrhythmia or renal failure early so the team can intervene quickly.'},
+   {t:'Restrict fluids to reduce workload on the kidneys', c:false, r:'Fluid restriction is the opposite of what\'s needed — hydration helps clear the toxic byproducts.'}
+  ]}
+ ]},
+{id:'c4', u:'onco', title:'New back pain and leg weakness', stem:'A client with metastatic breast cancer to bone reports new, severe midback pain and describes both legs feeling "heavy." On assessment you find decreased strength in both lower extremities and new difficulty voiding.',
+ vit:'Bilateral LE strength 3/5 · new urinary retention · pain 9/10',
+ steps:[
+  {q:'What should you suspect first?', opts:[
+   {t:'Spinal cord compression', c:true, r:'New localized back pain with bilateral weakness and bowel/bladder dysfunction in a client with bone metastases is the classic presentation of cord compression — an oncologic emergency.'},
+   {t:'Routine cancer-related fatigue', c:false, r:'Fatigue doesn\'t cause bilateral motor weakness or new bladder dysfunction.'},
+   {t:'A simple musculoskeletal back strain', c:false, r:'The combination of neuro deficits and bladder dysfunction goes well beyond a strain and demands urgent workup.'}
+  ]},
+  {q:'What treatment should you anticipate?', opts:[
+   {t:'Corticosteroids and urgent radiation or surgery', c:true, r:'Corticosteroids reduce cord edema right away while definitive treatment (radiation/surgery) is arranged emergently.'},
+   {t:'Physical therapy and outpatient follow-up', c:false, r:'This is far too slow a response for a time-sensitive neurologic emergency.'}
+  ]},
+  {q:'What is the complication you must prevent? (select all)', multi:true, opts:[
+   {t:'Permanent paralysis', c:true, r:'Untreated cord compression can progress to irreversible paralysis within hours.'},
+   {t:'Permanent bowel/bladder dysfunction', c:true, r:'Sphincter control can be lost permanently if compression isn\'t relieved promptly.'},
+   {t:'Hypoglycemia', c:false, r:'Not related to this pathology.'}
+  ]},
+  {q:'Immediate nursing priority?', opts:[
+   {t:'Limit unsafe movement, notify the provider immediately, and perform a focused neuro assessment', c:true, r:'Preventing further cord injury while getting the provider involved immediately is the priority — this cannot wait for a routine assessment cycle.'},
+   {t:'Encourage ambulation to keep the client mobile', c:false, r:'Ambulating a client with acute cord compression risks falls and further neurologic injury.'}
+  ]}
+ ]},
+{id:'c5', u:'onco', title:'Facial swelling in lung cancer', stem:'A client with lung cancer develops facial and neck swelling, distended neck veins, and worsening dyspnea over the past two days. He also reports a new headache.',
+ vit:'RR 26 · SpO2 91% RA · visible jugular venous distention · facial edema',
+ steps:[
+  {q:'What is the likely diagnosis?', opts:[
+   {t:'Superior vena cava syndrome', c:true, r:'Facial/neck edema, distended veins, dyspnea, and headache in a client with a thoracic tumor is the classic SVC syndrome picture from venous obstruction.'},
+   {t:'Simple fluid overload', c:false, r:'The distribution — face/neck/upper body, with distended neck veins in a lung cancer client — points to venous obstruction, not generalized overload.'},
+   {t:'Anaphylaxis', c:false, r:'No hives, wheeze, or hypotension described — this is a mechanical obstruction, not an allergic reaction.'}
+  ]},
+  {q:'What should the nurse do first?', opts:[
+   {t:'Elevate the head of the bed, apply oxygen, and notify the provider urgently', c:true, r:'Elevating the head and supporting oxygenation reduce venous pressure and improve comfort immediately while the provider is being notified.'},
+   {t:'Lay the client flat to improve venous return', c:false, r:'Flat positioning worsens venous congestion and can increase intracranial pressure symptoms.'},
+   {t:'Start an IV in the arm for quick access', c:false, r:'Upper-extremity venipuncture should be avoided when possible because venous return from the arms is already impaired.'}
+  ]},
+  {q:'What complications require close monitoring? (select all)', multi:true, opts:[
+   {t:'Airway compromise from progressive swelling', c:true, r:'Laryngeal/tracheal edema can develop as venous congestion worsens.'},
+   {t:'Cerebral edema', c:true, r:'Impaired venous drainage from the head can raise intracranial pressure.'},
+   {t:'Hypoglycemia', c:false, r:'Not a recognized complication of SVC syndrome.'}
+  ]},
+  {q:'Anticipated therapy?', opts:[
+   {t:'Corticosteroids, radiation, and possibly stent placement or chemotherapy', c:true, r:'Treatment targets shrinking the obstructing mass or restoring venous flow via a stent, alongside steroids to reduce inflammation.'},
+   {t:'Diuretics alone', c:false, r:'This is an obstructive problem, not a volume problem — diuretics do not relieve the obstruction.'}
+  ]}
+ ]},
+{id:'c6', u:'heme', title:'Chest pain and low oxygen in sickle cell disease', stem:'A 9-year-old with sickle cell disease is admitted for a pain crisis. On day two, he develops new chest pain, fever, and a productive cough. SpO2 is 88% on room air, and a chest x-ray shows a new infiltrate.',
+ vit:'Temp 101.8°F · SpO2 88% RA · new infiltrate on CXR · productive cough',
+ steps:[
+  {q:'What complication has developed?', opts:[
+   {t:'Acute chest syndrome', c:true, r:'New pulmonary infiltrate plus fever, cough, chest pain, and hypoxemia in a sickle cell client is the definition of acute chest syndrome — a leading cause of death in SCD.'},
+   {t:'Simple community-acquired pneumonia unrelated to sickle cell disease', c:false, r:'While infection can trigger it, this presentation in an SCD client must be treated as acute chest syndrome, a distinct emergency with its own protocol.'},
+   {t:'An ordinary, uncomplicated pain crisis', c:false, r:'A pain crisis alone does not cause hypoxemia and a new infiltrate — this is a separate, more dangerous complication.'}
+  ]},
+  {q:'What treatments should the nurse anticipate?', multi:true, opts:[
+   {t:'Supplemental oxygen', c:true, r:'Correcting hypoxemia prevents further sickling from worsening ischemia.'},
+   {t:'Antibiotics', c:true, r:'Infection is a common trigger and cannot be ruled out empirically.'},
+   {t:'Analgesia', c:true, r:'Adequate pain control allows effective deep breathing and incentive spirometry.'},
+   {t:'Withholding all IV fluids', c:false, r:'Fluids are given cautiously, not withheld — dehydration would worsen sickling.'}
+  ]},
+  {q:'What is the biggest risk if this is not treated aggressively?', opts:[
+   {t:'Respiratory failure', c:true, r:'Acute chest syndrome can progress rapidly to respiratory failure and is a leading cause of mortality in SCD.'},
+   {t:'Mild, self-limiting fatigue', c:false, r:'This significantly understates the danger of acute chest syndrome.'}
+  ]},
+  {q:'Priority nursing intervention?', opts:[
+   {t:'Administer oxygen, encourage incentive spirometry, and prepare for possible transfusion', c:true, r:'These directly address hypoxemia and the risk of worsening sickling while the team evaluates need for exchange transfusion.'},
+   {t:'Restrict fluids to prevent volume overload', c:false, r:'Cautious hydration is used here, not restriction — dehydration is a known trigger for sickling.'}
+  ]}
+ ]},
+{id:'c7', u:'heme', title:'Hot, swollen knee after a fall', stem:'A 15-year-old with hemophilia A trips during gym class. Two hours later he reports knee pain and you note the joint is warm, swollen, and held in a flexed position with decreased range of motion.',
+ vit:'Knee warm/swollen/flexed · pain 7/10 · no external bleeding visible',
+ steps:[
+  {q:'What are you most concerned about?', opts:[
+   {t:'Hemarthrosis — bleeding into the joint', c:true, r:'Warmth, swelling, a flexed position, and decreased ROM after even minor trauma in a client with hemophilia points directly to intra-articular bleeding.'},
+   {t:'A simple sprain that will resolve with rest', c:false, r:'In hemophilia, any joint change after trauma is treated as a bleed until proven otherwise — never dismissed as a routine sprain.'},
+   {t:'Septic arthritis', c:false, r:'Possible in general population, but the trauma history plus known hemophilia makes hemarthrosis far more likely and time-critical to treat first.'}
+  ]},
+  {q:'What is the priority treatment?', opts:[
+   {t:'Factor VIII replacement given promptly, without waiting for imaging', c:true, r:'In hemophilia, factor replacement should never wait for imaging when a bleed is suspected — early treatment limits joint damage.'},
+   {t:'Send to radiology for an X-ray before treating', c:false, r:'Delaying factor for imaging allows ongoing bleeding and increases joint damage.'},
+   {t:'Apply heat and massage the joint to improve circulation', c:false, r:'Heat and massage increase blood flow to an actively bleeding joint and worsen the bleed.'}
+  ]},
+  {q:'Which nursing actions support the joint right now? (select all)', multi:true, opts:[
+   {t:'Rest and protect the joint, avoiding weight bearing', c:true, r:'Immobilization limits further bleeding and injury.'},
+   {t:'Apply a cold pack wrapped in cloth', c:true, r:'Cold causes vasoconstriction, helping limit bleeding — unlike heat, which worsens it.'},
+   {t:'Elevate the limb if tolerated', c:true, r:'Elevation reduces venous pressure in the joint and helps control swelling.'},
+   {t:'Begin aggressive range-of-motion exercises immediately', c:false, r:'ROM exercise during an active bleed can worsen joint damage — physical therapy waits until bleeding is controlled.'}
+  ]},
+  {q:'What long-term complication does repeated hemarthrosis cause?', opts:[
+   {t:'Chronic joint damage (hemophilic arthropathy)', c:true, r:'Repeated bleeds cause progressive synovial and cartilage damage, leading to chronic arthropathy — this is why prompt factor treatment matters every time.'},
+   {t:'No lasting effect if the swelling resolves', c:false, r:'Even after swelling resolves, repeated bleeds cause cumulative joint damage over time.'}
+  ]}
+ ]},
+{id:'c8', u:'sensory', title:'Confusion after TURP', stem:'A client is six hours post-TURP with continuous bladder irrigation running. He becomes confused, reports a headache and nausea, and his vital signs show hypertension with a slowing heart rate.',
+ vit:'BP 168/94 · HR 52 · new confusion · Na 124 mEq/L',
+ steps:[
+  {q:'What is happening?', opts:[
+   {t:'TURP syndrome — dilutional hyponatremia from irrigation fluid absorption', c:true, r:'Confusion, headache, nausea, hypertension with bradycardia, and a low sodium after TURP with CBI are the hallmark signs of fluid overload/hyponatremia from irrigant absorption.'},
+   {t:'A typical, expected response to bladder irrigation', c:false, r:'These neuro and cardiovascular changes are not expected — they signal a specific, dangerous complication.'},
+   {t:'Opioid overdose from postoperative pain medication', c:false, r:'The vital sign and lab pattern (hypertension/bradycardia, hyponatremia) doesn\'t match opioid toxicity, which causes hypotension and respiratory depression.'}
+  ]},
+  {q:'What is the priority action?', opts:[
+   {t:'Stop or slow the irrigation as directed and notify the provider urgently', c:true, r:'Reducing further fluid absorption while urgently involving the provider addresses the cause directly and prevents progression.'},
+   {t:'Increase the irrigation rate to flush the bladder faster', c:false, r:'This would worsen fluid absorption and the hyponatremia.'},
+   {t:'Administer an oral fluid bolus to help him feel better', c:false, r:'More fluid will worsen the dilutional hyponatremia — this is dangerous here.'}
+  ]},
+  {q:'What complications could follow if untreated? (select all)', multi:true, opts:[
+   {t:'Seizures', c:true, r:'Severe hyponatremia can cause cerebral edema and seizures.'},
+   {t:'Cerebral edema', c:true, r:'Rapid fluid shifts with low sodium can cause brain swelling.'},
+   {t:'Hyperglycemia as the primary danger', c:false, r:'Not the mechanism here — the danger is sodium/fluid imbalance, not glucose.'}
+  ]},
+  {q:'What should the nurse continue monitoring closely?', opts:[
+   {t:'Sodium level and neurologic status', c:true, r:'Trending sodium and mental status guides how aggressively the sodium needs correcting and tracks improvement or worsening.'},
+   {t:'Only the color of the urine', c:false, r:'Urine color matters for bleeding assessment but doesn\'t address this specific life-threatening complication.'}
+  ]}
+ ]},
+{id:'c9', u:'sensory', title:'Sudden eye pain with halos', stem:'A client presents to the ED with sudden severe right eye pain, seeing halos around lights, a pounding headache, nausea, and vomiting. The right eye is red with a fixed, mid-dilated pupil.',
+ vit:'Right eye red, firm on gentle palpation · pupil fixed mid-dilated · pain 10/10',
+ steps:[
+  {q:'What is the diagnosis?', opts:[
+   {t:'Acute angle-closure glaucoma', c:true, r:'Sudden severe eye pain, halos, headache, nausea/vomiting, and a fixed mid-dilated pupil are the classic acute angle-closure glaucoma picture — a true ophthalmic emergency.'},
+   {t:'Open-angle glaucoma', c:false, r:'Open-angle glaucoma is gradual and painless — this presentation is acute and severely painful.'},
+   {t:'Simple migraine with visual aura', c:false, r:'A migraine wouldn\'t cause a fixed mid-dilated pupil or a red, firm eye — the ocular findings point to an eye emergency.'}
+  ]},
+  {q:'What must the nurse avoid giving unless specifically ordered by ophthalmology?', opts:[
+   {t:'Mydriatic or anticholinergic drugs', c:true, r:'These dilate the pupil further and can worsen angle closure, raising intraocular pressure even more.'},
+   {t:'IV analgesics for pain', c:false, r:'Pain control is appropriate supportive care and is not contraindicated.'},
+   {t:'Antiemetics for the nausea', c:false, r:'Antiemetics are appropriate supportive care here.'}
+  ]},
+  {q:'What is the feared complication if treatment is delayed?', opts:[
+   {t:'Permanent vision loss/blindness in the affected eye', c:true, r:'Sustained high intraocular pressure damages the optic nerve irreversibly — this is why the situation is treated as a true emergency.'},
+   {t:'Temporary mild blurriness with full recovery expected regardless of treatment', c:false, r:'This significantly understates the risk — untreated angle-closure glaucoma can cause permanent blindness within hours.'}
+  ]},
+  {q:'Priority nursing action?', opts:[
+   {t:'Facilitate emergency ophthalmology evaluation for rapid pressure-lowering treatment', c:true, r:'Definitive pressure reduction must happen emergently to preserve vision — this cannot wait for a routine consult.'},
+   {t:'Patch the eye and reassess in the morning', c:false, r:'This delays sight-saving treatment for a true emergency.'}
+  ]}
+ ]},
+{id:'c10', u:'onco', title:'Chills and back pain during transfusion', stem:'Ten minutes into a packed red blood cell transfusion, a client develops chills, low back pain, and shortness of breath. Blood pressure has dropped from baseline.',
+ vit:'BP dropped from 128/76 to 98/58 · new chills · back pain · dyspnea',
+ steps:[
+  {q:'What is the priority concern?', opts:[
+   {t:'Acute transfusion reaction', c:true, r:'Chills, back pain, dyspnea, and hypotension shortly after starting a transfusion are hallmark signs of an acute hemolytic or other serious transfusion reaction.'},
+   {t:'Coincidental, unrelated anxiety attack', c:false, r:'These objective findings (BP drop, dyspnea) with clear temporal relation to the transfusion cannot be dismissed as anxiety.'},
+   {t:'Expected mild reaction that can be monitored without intervening', c:false, r:'This constellation of symptoms requires immediate action, not passive monitoring.'}
+  ]},
+  {q:'What is the very first action?', opts:[
+   {t:'STOP the transfusion immediately', c:true, r:'Stopping the transfusion first prevents further exposure to the incompatible or reactive blood product before anything else is done.'},
+   {t:'Slow the rate and reassess in 15 minutes', c:false, r:'Slowing is not enough — any suspected reaction requires stopping the transfusion completely, right away.'},
+   {t:'Administer diphenhydramine and continue the infusion', c:false, r:'The transfusion must be stopped first; medications don\'t substitute for removing the trigger.'}
+  ]},
+  {q:'After stopping, what should the nurse do next? (select all)', multi:true, opts:[
+   {t:'Keep the IV open with normal saline using new tubing', c:true, r:'New tubing prevents infusing any remaining blood product while maintaining access for treatment.'},
+   {t:'Assess ABCs and vital signs', c:true, r:'Determines severity and guides the urgency of the response.'},
+   {t:'Notify the provider and blood bank, and recheck patient identity', c:true, r:'The blood bank needs to investigate, and identity verification checks for a clerical/ABO mismatch error.'},
+   {t:'Discard the blood bag and tubing immediately', c:false, r:'The bag and tubing must be sent to the lab for investigation, never discarded.'}
+  ]},
+  {q:'What complications could follow a severe reaction?', opts:[
+   {t:'DIC and acute kidney injury from hemolysis', c:true, r:'Severe hemolytic reactions can trigger widespread clotting activation and renal damage from free hemoglobin.'},
+   {t:'Guaranteed full recovery with no further monitoring needed', c:false, r:'Severe reactions require close ongoing monitoring for exactly these complications.'}
+  ]}
+ ]},
+{id:'c11', u:'heme', title:'Oozing and low platelets in sepsis', stem:'A client being treated for septic shock develops oozing from every IV insertion site, new petechiae, and blood-tinged secretions. Labs show platelets 42,000, fibrinogen low, PT/PTT prolonged, and D-dimer markedly elevated.',
+ vit:'Platelets 42,000 · fibrinogen low · PT/PTT prolonged · D-dimer high',
+ steps:[
+  {q:'What is this lab and clinical pattern consistent with?', opts:[
+   {t:'Disseminated intravascular coagulation (DIC)', c:true, r:'Diffuse oozing plus low platelets, low fibrinogen, prolonged PT/PTT, and high D-dimer is the textbook DIC picture — simultaneous clotting and bleeding triggered by sepsis.'},
+   {t:'Isolated thrombocytopenia from medication effect', c:false, r:'The combination of low fibrinogen, prolonged clotting times, and elevated D-dimer goes well beyond isolated low platelets.'},
+   {t:'Hemophilia newly presenting in adulthood', c:false, r:'Hemophilia is congenital and doesn\'t explain a low fibrinogen or this acute presentation tied to sepsis.'}
+  ]},
+  {q:'What is the priority underlying treatment?', opts:[
+   {t:'Treat the underlying cause (sepsis) while supporting with blood products', c:true, r:'DIC will not resolve until the triggering condition — sepsis here — is controlled; supportive blood products buy time.'},
+   {t:'Give aspirin to reduce clot formation', c:false, r:'Antiplatelet therapy would worsen the bleeding side of DIC and is not appropriate.'},
+   {t:'Withhold all blood products to avoid fluid overload', c:false, r:'Blood products (platelets, FFP, cryoprecipitate) are often needed to control active bleeding.'}
+  ]},
+  {q:'What nursing precautions apply? (select all)', multi:true, opts:[
+   {t:'Bleeding precautions — avoid unnecessary invasive procedures', c:true, r:'Every needle stick or invasive line risks uncontrolled bleeding in this state.'},
+   {t:'Monitor for signs of both bleeding and clot-related organ damage', c:true, r:'DIC causes simultaneous hemorrhage and microthrombi that can damage organs — both must be watched.'},
+   {t:'Apply firm pressure longer than usual after any venipuncture', c:true, r:'Clotting is impaired, so bleeding after routine sticks takes longer to control.'}
+  ]},
+  {q:'Which finding would most concern you as organ damage from microthrombi?', opts:[
+   {t:'New decreased urine output suggesting renal involvement', c:true, r:'Microthrombi in DIC can occlude small vessels in the kidneys, causing acute kidney injury — a decreasing urine output is a red flag.'},
+   {t:'Mild thirst', c:false, r:'Not a specific or concerning sign of organ microthrombosis.'}
+  ]}
+ ]},
+{id:'c12', u:'sensory', title:'Bladder spasms and no CBI output', stem:'A client with continuous bladder irrigation after TURP develops increasing bladder spasms, suprapubic distention, and the drainage bag has stopped filling despite irrigation continuing to run in.',
+ vit:'Suprapubic fullness/distention · irrigation running · no output for 20 minutes',
+ steps:[
+  {q:'What is most likely happening?', opts:[
+   {t:'Catheter obstruction, likely from a clot', c:true, r:'Irrigant going in with no drainage coming out plus bladder distention and spasm strongly suggests the catheter or tubing is obstructed, often by a clot.'},
+   {t:'Normal expected fluctuation in irrigation output', c:false, r:'Suprapubic distention with zero output is not a normal variant — it signals a blocked system that needs immediate attention.'},
+   {t:'The client simply needs to void on his own', c:false, r:'He has a catheter in place; the problem is a blocked drainage system, not a voiding issue.'}
+  ]},
+  {q:'What is the priority nursing action?', opts:[
+   {t:'Check the tubing for kinks and ensure the drainage bag isn\'t overfull, then notify the provider if patency isn\'t restored', c:true, r:'Ruling out simple mechanical causes first (kinks, full bag) is safe and fast; if that doesn\'t resolve it, provider notification is needed for further intervention such as manual irrigation.'},
+   {t:'Turn off the irrigation completely and wait for the physician to arrive with no other action', c:false, r:'Continuing to instill fluid into an obstructed, distended bladder without addressing kinks first risks worsening distention — checking the system is the immediate step.'},
+   {t:'Increase the irrigation rate to try to flush the clot through faster', c:false, r:'Increasing inflow into an already obstructed, distended bladder can cause dangerous overdistention.'}
+  ]},
+  {q:'What complications are you protecting against? (select all)', multi:true, opts:[
+   {t:'Bladder overdistention or rupture', c:true, r:'Continued inflow with no outflow can overstretch or rupture the bladder.'},
+   {t:'Hemorrhage from worsening clot retention', c:true, r:'A worsening obstruction can be associated with increasing bleeding and clot burden.'},
+   {t:'Hyperglycemia', c:false, r:'Unrelated to this urologic complication.'}
+  ]},
+  {q:'How is true urine output calculated in this client?', opts:[
+   {t:'Total drainage output minus the volume of irrigant instilled', c:true, r:'Because irrigant fluid mixes with urine in the drainage bag, it must be subtracted to know the client\'s actual urine output.'},
+   {t:'Total drainage output with no adjustment needed', c:false, r:'This would significantly overestimate the client\'s real urine output since it includes irrigant fluid.'}
+  ]}
+ ]}
+];
+
+var caseListEl = document.getElementById('caseList');
+var caseRunnerEl = document.getElementById('caseRunner');
+var caseListWrap = document.getElementById('caseListWrap');
+
+function renderCaseList(){
+  caseListEl.innerHTML = '';
+  cases.forEach(function(c){
+    var btn = document.createElement('button');
+    btn.className='casepick';
+    btn.style.setProperty('--accent-cur','var('+unitColor[c.u]+')');
+    var done = state.casesDone[c.id];
+    btn.innerHTML = (done?'<span class="done">✅</span>':'') +
+      '<div class="unit" style="color:var('+unitColor[c.u]+')">'+unitLabel[c.u]+'</div>'+
+      '<div class="ttl">'+c.title+'</div>';
+    btn.addEventListener('click', function(){ runCase(c); });
+    caseListEl.appendChild(btn);
+  });
+}
+renderCaseList();
+
+function runCase(c){
+  caseListWrap.hidden = true;
+  caseRunnerEl.hidden = false;
+  var stepIdx = 0;
+  var earned = 0;
+
+  function renderStep(){
+    var step = c.steps[stepIdx];
+    var stepbarHtml = c.steps.map(function(s,i){ return '<i class="'+(i<=stepIdx?'on':'')+'" style="'+(i<=stepIdx?'background:var('+unitColor[c.u]+')':'')+'"></i>'; }).join('');
+    var optsHtml = step.opts.map(function(o,i){
+      return '<label class="opt" data-i="'+i+'"><input type="'+(step.multi?'checkbox':'radio')+'" name="stepopt"><span>'+o.t+'</span></label>';
+    }).join('');
+    caseRunnerEl.innerHTML =
+      '<button class="checkbtn" id="backToCases" style="background:var(--surface-2); color:var(--ink); margin-bottom:14px;">&larr; All cases</button>'+
+      '<div class="stem"><span class="pill '+c.u+'">'+unitLabel[c.u]+'</span>'+
+        '<h3 style="margin-top:8px;">'+c.title+'</h3><p style="margin:0;">'+c.stem+'</p>'+
+        '<div class="vit">'+c.vit+'</div></div>'+
+      '<div class="stepbar" style="--accent-cur:var('+unitColor[c.u]+')">'+stepbarHtml+'</div>'+
+      '<div class="qblock"><h4>Step '+(stepIdx+1)+' of '+c.steps.length+(step.multi?' — select all that apply':'')+'</h4>'+
+      '<div id="optsWrap" style="--accent-cur:var('+unitColor[c.u]+')">'+optsHtml+'</div></div>'+
+      '<button class="checkbtn" id="checkStepBtn" style="--accent-cur:var('+unitColor[c.u]+')">Check answer</button>'+
+      '<div id="rationaleWrap"></div>';
+
+    document.getElementById('backToCases').addEventListener('click', function(){
+      caseListWrap.hidden = false; caseRunnerEl.hidden = true; renderCaseList();
+    });
+
+    var checked = false;
+    document.getElementById('checkStepBtn').addEventListener('click', function(){
+      if(checked){
+        // proceed
+        stepIdx++;
+        if(stepIdx < c.steps.length){ renderStep(); }
+        else { finishCase(); }
+        return;
+      }
+      var optEls = caseRunnerEl.querySelectorAll('.opt');
+      var anySelected = false;
+      optEls.forEach(function(el){ if(el.querySelector('input').checked) anySelected = true; });
+      if(!anySelected) return;
+      checked = true;
+      var allCorrectPicked = true;
+      optEls.forEach(function(el,i){
+        var input = el.querySelector('input');
+        input.disabled = true;
+        var o = step.opts[i];
+        if(input.checked){
+          el.classList.add(o.c?'correct':'incorrect');
+          if(!o.c) allCorrectPicked = false;
+        } else if(o.c){
+          el.classList.add('correct','dim');
+          allCorrectPicked = false;
+        } else {
+          el.classList.add('dim');
+        }
+      });
+      if(allCorrectPicked) earned += 1;
+      var rHtml = step.opts.map(function(o){
+        return '<div class="rationale"><b>'+(o.c?'✓ ':'✗ ')+o.t+' — </b>'+o.r+'</div>';
+      }).join('');
+      document.getElementById('rationaleWrap').innerHTML = rHtml;
+      document.getElementById('checkStepBtn').textContent = (stepIdx===c.steps.length-1) ? 'Finish case' : 'Next step';
+    });
+  }
+
+  function finishCase(){
+    var pct = Math.round(100*earned/c.steps.length);
+    var already = state.casesDone[c.id];
+    if(!already){
+      state.casesDone[c.id] = true;
+      persist();
+    }
+    caseRunnerEl.innerHTML =
+      '<div class="card casesummary" style="--accent-cur:var('+unitColor[c.u]+')">'+
+      '<div class="big">'+pct+'%</div>'+
+      '<p>You worked through <b>'+c.title+'</b> — identifying the problem, the priority treatment, the complications to watch, and the first intervention.</p>'+
+      '<button class="checkbtn" id="doneBtn" style="background:var('+unitColor[c.u]+')">Back to case list</button>'+
+      '</div>';
+    document.getElementById('doneBtn').addEventListener('click', function(){
+      caseListWrap.hidden = false; caseRunnerEl.hidden = true; renderCaseList();
+    });
+    if(!already) addXP(15 + Math.round(pct/10));
+  }
+
+  renderStep();
+}
+
+/* ================= QUIZ ================= */
+var quizBank = [
+ {q:'A client receiving vesicant chemotherapy reports burning at the IV site. What should the nurse do first?', opts:['Flush the line','Stop the infusion, leave catheter for aspiration/antidote','Apply heat and continue','Increase the rate'], a:1, r:'Stopping first prevents further tissue injury; the catheter stays in place for possible aspiration and antidote administration.'},
+ {q:'A neutropenic client has a temperature of 100.4°F (38°C). Which action has priority?', opts:['Recheck in 4 hours','Give acetaminophen and monitor','Notify the provider and obtain cultures/antibiotics promptly','Encourage oral fluids only'], a:2, r:'Any fever with neutropenia is an emergency requiring prompt cultures and antibiotics — do not delay treatment.'},
+ {q:'Which post-cataract-surgery finding requires immediate action?', opts:['Mild itching','Small blood-tinged drainage','Severe eye pain with nausea','Slightly improving blurred vision'], a:2, r:'Severe pain with nausea may indicate increased intraocular pressure or hemorrhage — not an expected finding.'},
+ {q:'A client with an intraocular gas bubble asks about flying. Best response?', opts:['It\'s fine after 24 hours','Avoid flying/high altitude until the bubble is absorbed','Only avoid flying if symptomatic','No restriction needed'], a:1, r:'Altitude change can dangerously expand the gas bubble; wait until the ophthalmologist confirms it is absorbed.'},
+ {q:'A child with sickle cell disease has chest pain, fever, cough, and SpO2 88%. Suspected complication?', opts:['Simple vaso-occlusive crisis','Acute chest syndrome','Aplastic crisis','Splenic sequestration'], a:1, r:'New infiltrate with respiratory symptoms and hypoxemia defines acute chest syndrome.'},
+ {q:'A client with hemophilia reports a hot, swollen knee. What should the nurse anticipate?', opts:['Heat and massage','Prompt factor replacement, rest, cold, protection', 'Aggressive ROM exercises','Aspirin for pain'], a:1, r:'Factor replacement should not wait for imaging; heat/massage/ROM/aspirin all worsen an active joint bleed.'},
+ {q:'Which lab pattern best supports hemophilia A?', opts:['Prolonged PT, normal aPTT','Prolonged aPTT with normal PT/INR and platelets','Low platelets, normal PT/aPTT','Prolonged PT and aPTT'], a:1, r:'Hemophilia affects the intrinsic pathway (aPTT) while PT, INR, and platelet count remain normal.'},
+ {q:'A chest tube becomes disconnected from the drainage system. Immediate action?', opts:['Clamp the tube','Place the distal end in sterile water and get a new system','Remove the tube','Increase suction'], a:1, r:'Sterile water maintains a temporary water seal while a new drainage system is obtained; assess respiratory status closely.'},
+ {q:'CBI intake is 3,000 mL and total drainage is 4,150 mL. What is true urine output?', opts:['4,150 mL','3,000 mL','1,150 mL','7,150 mL'], a:2, r:'True urine output = total drainage − irrigant instilled = 4,150 − 3,000 = 1,150 mL.'},
+ {q:'A brachytherapy source is found loose in the bed. What should the nurse do?', opts:['Pick it up with gloved hands','Use long-handled forceps to place it in the shielded container and notify radiation safety','Leave it and finish care','Flush it down the toilet'], a:1, r:'Never touch a dislodged sealed source directly — use forceps and shielding, then notify radiation safety immediately.'},
+ {q:'Which statement about hydroxyurea needs correction?', opts:['"I will keep CBC appointments"','"I will report fever"','"I can double a missed dose"','"This may reduce crises"'], a:2, r:'Missed doses should never be doubled unless specifically instructed — this statement shows a need for further teaching.'},
+ {q:'A client receiving blood develops chills and dyspnea. First action?', opts:['Slow the rate and monitor','Stop the transfusion, keep IV open with NS/new tubing, notify provider','Give acetaminophen and continue','Increase the rate to finish quickly'], a:1, r:'Stop first, maintain access with new tubing, assess ABCs, and notify the provider/blood bank.'},
+ {q:'ANC below what value indicates profound infection risk?', opts:['1,500 cells/mm³','1,000 cells/mm³','500 cells/mm³','2,000 cells/mm³'], a:2, r:'ANC below 500 cells/mm³ indicates profound infection risk — fever may be the only sign.'},
+ {q:'Which drug is fatal if given intrathecally?', opts:['Doxorubicin','Vincristine','Cisplatin','Methotrexate'], a:1, r:'Vincristine causes fatal neurotoxicity if accidentally given intrathecally — a classic high-alert medication fact.'},
+ {q:'A client on latanoprost asks why her eyes seem to be changing color. Best explanation?', opts:['This is an allergic reaction — stop the drug','Iris pigmentation change can occur and may be permanent','This means the drug isn\'t working','This requires immediate emergency care'], a:1, r:'Prostaglandin analogs like latanoprost can cause iris/eyelash pigmentation changes that may be permanent — expected, not an emergency.'},
+ {q:'What finding in a client with a new ileostomy needs to be reported?', opts:['Moist, pink-red stoma','Mild edema in the first week','Dusky or pale stoma color','Stool present in the pouch'], a:2, r:'A dusky, pale, or dark stoma suggests impaired perfusion and must be reported immediately.'},
+ {q:'Which finding after ear surgery is abnormal and should be reported?', opts:['Mild dizziness','Temporary reduced hearing','Small serosanguineous drainage','Sudden severe vertigo and facial weakness'], a:3, r:'Sudden severe vertigo with facial weakness suggests a significant complication and requires prompt evaluation.'},
+ {q:'A client with DIC is oozing from every IV site. Which action is most appropriate?', opts:['Apply brief pressure only', 'Apply prolonged pressure and avoid unnecessary invasive procedures','Give aspirin to reduce clot burden','Restrict all blood products'], a:1, r:'Bleeding precautions with prolonged pressure and avoidance of unnecessary punctures reduce bleeding risk; blood products are often needed, not restricted.'},
+ {q:'What best describes true CBI output calculation?', opts:['Add irrigant to drainage','Subtract irrigant from total drainage','Ignore irrigant entirely','Multiply drainage by two'], a:1, r:'Because irrigant mixes with urine in the bag, it must be subtracted to determine actual urine output.'},
+ {q:'Which teaching is correct for a client using timolol eye drops?', opts:['No monitoring needed','Check pulse and blood pressure; caution with asthma/COPD','Safe to use with any respiratory condition','Discontinue if eyes feel dry'], a:1, r:'Timolol is a beta blocker and can cause systemic effects like bradycardia/bronchospasm — pulse/BP monitoring and respiratory caution are essential.'}
+];
+
+var quizState = { order:[], idx:0, score:0, answered:false };
+function shuffle(arr){
+  var a = arr.slice();
+  for(var i=a.length-1;i>0;i--){ var j = Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function startQuiz(){
+  quizState.order = shuffle(quizBank.map(function(_,i){return i;}));
+  quizState.idx = 0; quizState.score = 0; quizState.answered = false;
+  renderQuiz();
+}
+function renderQuiz(){
+  var area = document.getElementById('quizArea');
+  if(quizState.idx >= quizState.order.length){
+    var pct = Math.round(100*quizState.score/quizState.order.length);
+    if(pct > state.quizBest){ state.quizBest = pct; persist(); renderXP(); }
+    area.innerHTML = '<div class="card casesummary"><div class="big">'+pct+'%</div>'+
+      '<p>You scored '+quizState.score+' out of '+quizState.order.length+'.</p>'+
+      '<button class="checkbtn" id="retryQuiz">Try again, freshly shuffled</button></div>';
+    document.getElementById('retryQuiz').addEventListener('click', startQuiz);
+    if(pct>=70) addXP(20); else addXP(8);
+    return;
+  }
+  var qi = quizState.order[quizState.idx];
+  var item = quizBank[qi];
+  var optsHtml = item.opts.map(function(o,i){
+    return '<label class="opt" data-i="'+i+'"><input type="radio" name="quizopt"><span>'+o+'</span></label>';
+  }).join('');
+  area.innerHTML =
+   '<div class="quizhead"><span class="scorepill">Question '+(quizState.idx+1)+' / '+quizState.order.length+'</span><span class="scorepill">Score: '+quizState.score+'</span></div>'+
+   '<div class="card pad"><h4 style="font-family:Fraunces; font-size:18px; margin-bottom:14px;">'+item.q+'</h4>'+
+   '<div id="quizOpts">'+optsHtml+'</div>'+
+   '<button class="checkbtn" id="quizCheckBtn">Check answer</button>'+
+   '<div id="quizRationale"></div></div>';
+  quizState.answered = false;
+  document.getElementById('quizCheckBtn').addEventListener('click', function(){
+    if(quizState.answered){ quizState.idx++; renderQuiz(); return; }
+    var optEls = area.querySelectorAll('.opt');
+    var selectedIdx = -1;
+    optEls.forEach(function(el,i){ if(el.querySelector('input').checked) selectedIdx = i; });
+    if(selectedIdx===-1) return;
+    quizState.answered = true;
+    var correct = selectedIdx === item.a;
+    if(correct) quizState.score++;
+    optEls.forEach(function(el,i){
+      el.querySelector('input').disabled = true;
+      if(i===item.a) el.classList.add('correct');
+      else if(i===selectedIdx) el.classList.add('incorrect');
+      else el.classList.add('dim');
+    });
+    document.getElementById('quizRationale').innerHTML = '<div class="rationale"><b>'+(correct?'Correct — ':'Not quite — ')+'</b>'+item.r+'</div>';
+    document.getElementById('quizCheckBtn').textContent = (quizState.idx===quizState.order.length-1)?'See results':'Next question';
+  });
+}
+startQuiz();
+
+/* ---------------- INIT ---------------- */
+renderXP();
+go('priority');
+
+})();
+</script>
